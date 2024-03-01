@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>How I got my first Cloud Engineer job</title>
+</head>
+
+<body>
+    <h1>Hello ladies and gentlemen!</h1>
+    <p>I'm hosted on Amazon S3 :D</p>
+    <img src="pexels-serpstat-572056.jpg">
+
+    <!-- Display area for VisitCount value -->
+    <div id="visitCountDisplay">Loading...</div>
+
+    <script>
+        // Function to make API call and update VisitCount value
+        function fetchVisitCount() {
+            // Check if the function has been called before
+            const localVisitCount = localStorage.getItem('visitCount');
+
+            if (localVisitCount === null) {
+                const apiEndpoint = 'https://cjvtiab4sb.execute-api.ap-northeast-2.amazonaws.com/visitcount';
+
+                // Make the API call using Fetch API
+                fetch(apiEndpoint)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Extract VisitCount value from the API response
+                        console.log('API Response:', data);
+                        const serverVisitCount = data.UpdatedAttributes.VisitCount;
+
+                        // Set VisitCount in localStorage
+                        localStorage.setItem('visitCount', serverVisitCount);
+
+                        // Update the display content
+                        document.getElementById('visitCountDisplay').innerText = `You are the ${serverVisitCount}th visitor!`;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching VisitCount:', error);
+                    });
+            } else {
+                // Visit count already present in localStorage, update the display
+                document.getElementById('visitCountDisplay').innerText = `You are the ${localVisitCount}th visitor!`;
+            }
+        }
+
+        // Call the fetchVisitCount function when the page loads
+        window.onload = function () {
+            // Fetch visit count after a short delay (simulating loading time)
+            setTimeout(fetchVisitCount, 1000);
+        };
+    </script>
+</body>
+
+</html>

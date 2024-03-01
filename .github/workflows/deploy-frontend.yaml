@@ -1,0 +1,30 @@
+name: Test Frontend and Deploy to S3 Bucket
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Node.js and npm
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14'
+
+    - name: Install dependencies and run tests
+      run: |
+        npm install
+        npm run cypress:test
+
+    - name: Deploy Frontend to S3 Bucket
+      run: |
+        aws s3 sync . s3://your-bucket-name --delete
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

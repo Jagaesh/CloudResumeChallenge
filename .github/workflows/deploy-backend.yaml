@@ -1,0 +1,41 @@
+name: Test and Deploy CloudFormation Stack
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # Choose the Python version you need
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt  # Adjust this according to your project setup
+
+    - name: Run Python tests
+      run: python -m unittest discover tests  # Adjust this according to your test setup
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: <your-region>
+
+    - name: Deploy CloudFormation stack
+      run: aws cloudformation deploy --template-file path/to/your/template.yaml --stack-name MyStackName --capabilities CAPABILITY_NAMED_IAM
