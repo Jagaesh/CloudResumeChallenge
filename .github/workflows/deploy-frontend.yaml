@@ -1,4 +1,4 @@
-name: Deploy Frontend to S3 Bucket
+name: Test Frontend and Deploy to S3 Bucket
 
 # Define trigger
 on:
@@ -8,17 +8,29 @@ on:
 
 # Define variables
 env:
-  AWS_REGION: <ap-northeast-2>
+  AWS_REGION: <ap-northeast-2>  # Replace with your desired AWS region
   IAM_ROLE_ARN: arn:aws:iam::123456789012:role/S3UpdateRole  # Replace with the IAM role ARN
+  S3_BUCKET_NAME: your-bucket-name  # Replace with your S3 bucket name
 
 # Define actions
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: Install Node.js and npm
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
 
+    - name: Install dependencies and run Cypress test
+      run: |
+        npm install
+        npm run cypress:test
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:
@@ -28,4 +40,4 @@ jobs:
 
     - name: Deploy Frontend to S3 Bucket
       run: |
-        aws s3 sync . s3://your-bucket-name --delete --region ${{ env.AWS_REGION }}
+        aws s3 sync . s3://${{ env.S3_BUCKET_NAME }} --delete --region ${{ env.AWS_REGION }}
