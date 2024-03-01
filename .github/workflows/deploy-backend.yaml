@@ -1,10 +1,19 @@
 name: Test and Deploy CloudFormation Stack
 
+# Define trigger
 on:
   push:
     branches:
       - main
 
+# Define variables
+env:
+  AWS_REGION: <ap-northeast-2>  # Replace with your desired AWS region
+  IAM_ROLE_ARN: arn:aws:iam::123456789012:role/CloudFormationRole  # Replace with the IAM role ARN
+  STACK_NAME: MyStackName  # Replace with your CloudFormation stack name
+  TEMPLATE_PATH: path/to/your/template.yaml  # Replace with the path to your CloudFormation template
+
+# Define actions
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -12,30 +21,28 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'  # Choose the Python version you need
-
-    - name: Install dependencies
-      run: pip install -r requirements.txt  # Adjust this according to your project setup
-
-    - name: Run Python tests
-      run: python -m unittest discover tests  # Adjust this according to your test setup
-
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Configure AWS credentials
+    - name: Configure AWS credentials for Validation
       uses: aws-actions/configure-aws-credentials@v2
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: <your-region>
+        role-to-assume: ${{ env.IAM_ROLE_ARN }}
+        role-duration-seconds: 900  # Adjust as per your requirements
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Validate CloudFormation template
+      run: aws cloudformation validate-template --template-body file://${{ env.TEMPLATE_PATH }}
+      env:
+        AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: Configure AWS credentials for Deployment
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        role-to-assume: ${{ env.IAM_ROLE_ARN }}
+        role-duration-seconds: 900  # Adjust as per your requirements
+        aws-region: ${{ env.AWS_REGION }}
 
     - name: Deploy CloudFormation stack
-      run: aws cloudformation deploy --template-file path/to/your/template.yaml --stack-name MyStackName --capabilities CAPABILITY_NAMED_IAM
+      run: aws cloudformation deploy --template-file ${{ env.TEMPLATE_PATH }} --stack-name ${{ env.STACK_NAME }} --capabilities CAPABILITY_NAMED_IAM

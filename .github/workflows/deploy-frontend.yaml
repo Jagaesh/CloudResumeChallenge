@@ -1,30 +1,31 @@
-name: Test Frontend and Deploy to S3 Bucket
+name: Deploy Frontend to S3 Bucket
 
+# Define trigger
 on:
   push:
     branches:
       - main
 
+# Define variables
+env:
+  AWS_REGION: <ap-northeast-2>
+  IAM_ROLE_ARN: arn:aws:iam::123456789012:role/S3UpdateRole  # Replace with the IAM role ARN
+
+# Define actions
 jobs:
-  test_and_deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install Node.js and npm
-      uses: actions/setup-node@v1
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
       with:
-        node-version: '14'
-
-    - name: Install dependencies and run tests
-      run: |
-        npm install
-        npm run cypress:test
+        role-to-assume: ${{ env.IAM_ROLE_ARN }}
+        role-duration-seconds: 900  # Adjust as per your requirements
+        aws-region: ${{ env.AWS_REGION }}
 
     - name: Deploy Frontend to S3 Bucket
       run: |
-        aws s3 sync . s3://your-bucket-name --delete
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws s3 sync . s3://your-bucket-name --delete --region ${{ env.AWS_REGION }}
