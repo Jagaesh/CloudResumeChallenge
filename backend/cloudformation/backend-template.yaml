@@ -1,0 +1,281 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Automates the deployment of ressources to host a Cloud Resume Challenge website on S3
+
+Parameters:
+  CloudResumeChallengeBucketName:
+    Type: String
+    Description: Name for the S3 bucket to host the website
+    Default: mrbrown-cloud-resume-challenge
+
+  SourceBucketName:
+    Type: String
+    Description: Name of the source S3 bucket from which to copy files
+    Default: charlescloudjourney.com
+
+Resources:
+  # S3 Bucket for Cloud Resume Challenge
+  CloudResumeChallengeBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref CloudResumeChallengeBucketName
+
+  # IAM Role for the UploadFiles Lambda Function
+  UploadFilesRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: UploadFilesPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:PutObject  # Needed for put_object
+                  - s3:GetObject  # Needed for copy_object
+                Resource: !Sub "arn:aws:s3:::${CloudResumeChallengeBucketName}/*"
+
+  # Lambda Function to Upload Files
+  UploadFilesFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.lambda_handler
+      Role: !GetAtt UploadFilesRole.Arn
+      Runtime: python3.9
+      Code:
+        ZipFile: |
+          import boto3
+
+          def lambda_handler(event, context):
+              s3 = boto3.client('s3')
+              try:
+                  # Copy index.html from source bucket to destination bucket
+                  s3.copy_object(
+                      CopySource={'Bucket': !Ref SourceBucketName, 'Key': 'index.html'},
+                      Bucket: !Ref CloudResumeChallengeBucketName,
+                      Key: 'index.html'
+                  )
+
+                  # Copy pexels-serpstat-572056.jpg from source bucket to destination bucket
+                  s3.copy_object(
+                      CopySource={'Bucket': !Ref SourceBucketName, 'Key': 'pexels-serpstat-572056.jpg'},
+                      Bucket: !Ref CloudResumeChallengeBucketName,
+                      Key: 'pexels-serpstat-572056.jpg'
+
+                  # Copy AddOneToVisitCountCode.zip from source bucket to destination bucket
+                  s3.copy_object(
+                      CopySource={'Bucket': !Ref SourceBucketName, 'Key': 'AddOneToVisitCountCode.zip'},
+                      Bucket: !Ref CloudResumeChallengeBucketName,
+                      Key: 'AddOneToVisitCountCode.zip'
+
+                  )
+
+                  return {
+                      'statusCode': 200,
+                      'body': 'Files uploaded successfully'
+                  }
+              except Exception as e:
+                  return {
+                      'statusCode': 500,
+                      'body': f'Error uploading files: {str(e)}'
+                  }
+
+  # Origin Access Control Configuration
+  OriginAccessControlPolicy:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: cloud-resume-challenge-origin-access-control
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  # DynamoDB table for storing visitors data
+  VisitorsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: ID
+          AttributeType: S
+      KeySchema:
+        - AttributeName: ID
+          KeyType: HASH
+      TableName: VisitorsTable
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
+  # IAM Role for the AddAnyVisitor Lambda Function
+  AddAnyVisitorRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: AddAnyVisitorPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                Resource: !GetAtt VisitorsTable.Arn
+
+  # Lambda Function to Add DynanoDB Item to VisitorsTable
+  AddAnyVisitorFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.lambda_handler
+      Role: !GetAtt AddAnyVisitorRole.Arn
+      Runtime: python3.9
+      Code:
+        ZipFile: |
+          import boto3
+
+          def lambda_handler(event, context):
+              dynamodb = boto3.resource('dynamodb')
+              table = dynamodb.Table('VisitorsTable')
+              table.put_item(
+                  Item={
+                      'ID': 'Any',
+                      'VisitCount': 0
+                  }
+              )
+              return 'Item added successfully'
+
+  # IAM Role for the AddOneToVisitCount Lambda Function
+  AddOneToVisitCountRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: AddOneToVisitCountPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:UpdateItem
+                Resource: !GetAtt VisitorsTable.Arn
+
+  # Lambda Function to Add One to VisitCount
+  AddOneToVisitCountFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          
+          dynamodb_client = boto3.resource('dynamodb')
+          table = dynamodb_client.Table('VisitorsTable')
+          
+          def lambda_handler(event, context):
+              try:
+                
+                  headers = {
+                      'Content-Type': 'application/json',
+                      'Access-Control-Allow-Origin': 'https://charlescloudjourney.com/',
+                      'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept',
+                      'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+                  }
+                  
+                  # Handle preflight OPTIONS request
+                  if event['httpMethod'] == 'OPTIONS':
+                      print("Preflight request received")
+                      return {
+                          'statusCode': 200,
+                          'headers': headers,
+                          'body': json.dumps({'Message': 'Preflight request successful'}),
+                      }
+                  
+                  response_table = table.update_item(
+                      Key={'ID': "Any"},
+                      UpdateExpression="SET VisitCount = VisitCount + :val",
+                      ExpressionAttributeValues={':val' : 1},
+                      ReturnValues="UPDATED_NEW"
+                  )
+                  
+                  response = {
+                      'statusCode': 200,
+                      'headers': headers,
+                      'body': json.dumps({'Message': 'Item updated successfully', 'UpdatedAttributes': response_table['Attributes']}, default=str)
+                  }
+                  
+                  print("Received event: " + json.dumps(event))
+                  print("Regular request received. Response:", response)
+                  
+                  return response
+          
+              except Exception as e:
+                  
+                  print("Received event: " + json.dumps(event))
+                  print("Error:", str(e))
+                  
+                  error_response = {
+                      'statusCode': 500,
+                      'headers': {
+                          'Content-Type': 'application/json',
+                          'Access-Control-Allow-Origin': '*',
+                      },
+                      'body': json.dumps({'error': str(e)}),
+                  }
+                  
+                  print("Sending error response:", error_response)
+                  
+                  return error_response
+      Handler: index.lambda_handler
+      Role: !GetAtt AddOneToVisitCountRole.Arn
+      Runtime: python3.9
+
+  # HTTP API to Count Visitors
+  CloudResumeChallengeAPI:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: CloudResumeChallengeAPI
+      ProtocolType: HTTP
+      CorsConfiguration:
+        AllowOrigins:
+          - "https://s3.ap-northeast-2.amazonaws.com"
+        AllowHeaders:
+          - "origin"
+          - "content-type"
+          - "accept"
+        AllowMethods:
+          - "GET"
+          - "POST"
+          - "OPTIONS"
+
+  # HTTP API Integration for AddOneToVisitCountFunction
+  AddOneToVisitCountIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref CloudResumeChallengeAPI
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AddOneToVisitCountFunction.Arn}/invocations"
+      PayloadFormatVersion: "2.0"
+
+  # HTTP API Route for AddOneToVisitCountFunction
+  VisitCountRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref CloudResumeChallengeAPI
+      RouteKey: GET /visitcount
+      Target: !Sub "integrations/${AddOneToVisitCountIntegration}"
