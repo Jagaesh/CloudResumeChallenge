@@ -9,7 +9,7 @@ on:
 
 # Define variables
 env:
-  AWS_REGION: <ap-northeast-2>  # Replace with your desired AWS region
+  AWS_REGION: ap-northeast-2  # Replace with your desired AWS region
   IAM_ROLE_ARN: arn:aws:iam::533267111936:role/CloudResumeChallengeStack-UploadFilesRole-knS2hFY3NO52  # Replace with the IAM role ARN
   S3_BUCKET_NAME: mrbrown-cloud-resume-challenge  # Replace with your S3 bucket name
 
