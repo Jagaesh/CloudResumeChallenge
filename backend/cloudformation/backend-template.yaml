@@ -279,3 +279,17 @@ Resources:
       ApiId: !Ref CloudResumeChallengeAPI
       RouteKey: GET /visitcount
       Target: !Sub "integrations/${AddOneToVisitCountIntegration}"
+  
+  # Stage for the HTTP API
+  APIStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref CloudResumeChallengeAPI
+      StageName: "$default"
+
+  # Deployment for the HTTP API
+  APIDeployment:
+    Type: AWS::ApiGatewayV2::Deployment
+    Properties:
+      ApiId: !Ref CloudResumeChallengeAPI
+      StageName: !Ref APIStage
