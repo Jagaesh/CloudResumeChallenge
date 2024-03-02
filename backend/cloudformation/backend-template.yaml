@@ -270,7 +270,7 @@ Resources:
       ApiId: !Ref CloudResumeChallengeAPI
       IntegrationType: AWS_PROXY
       IntegrationUri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${AddOneToVisitCountFunction.Arn}/invocations"
-      PayloadFormatVersion: "2.0"
+      PayloadFormatVersion: "1.0"
 
   # HTTP API Route for AddOneToVisitCountFunction
   VisitCountRoute:
@@ -286,6 +286,7 @@ Resources:
     Properties:
       ApiId: !Ref CloudResumeChallengeAPI
       StageName: "$default"
+      AutoDeploy: true
 
   # Deployment for the HTTP API
   APIDeployment:
