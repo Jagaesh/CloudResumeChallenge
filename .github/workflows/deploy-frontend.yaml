@@ -17,7 +17,10 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
-    # steps:
+    steps:
+      - name: Do nothing placeholder action
+        run: echo "This is a placeholder action that does nothing"
+    
     # - name: Install Node.js and npm
     #   uses: actions/setup-node@v2
     #   with:
