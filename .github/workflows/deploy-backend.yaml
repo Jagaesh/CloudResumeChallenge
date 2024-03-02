@@ -26,7 +26,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: ${{ env.IAM_ROLE_ARN }}
-        role-duration-seconds: 900  # Adjust as per your requirements
+        # role-duration-seconds: 900  # Adjust as per your requirements
         aws-region: ${{ env.AWS_REGION }}
 
     - name: Validate CloudFormation template
