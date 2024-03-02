@@ -20,10 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Configure AWS credentials for Validation
-      uses: aws-actions/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: ${{ env.IAM_ROLE_ARN }}
         role-duration-seconds: 900  # Adjust as per your requirements
@@ -39,7 +39,7 @@ jobs:
     needs: test
     steps:
     - name: Configure AWS credentials for Deployment
-      uses: aws-actions/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: ${{ env.IAM_ROLE_ARN }}
         role-duration-seconds: 900  # Adjust as per your requirements

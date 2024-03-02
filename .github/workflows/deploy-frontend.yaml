@@ -17,11 +17,11 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
-    steps:
-    - name: Install Node.js and npm
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
+    # steps:
+    # - name: Install Node.js and npm
+    #   uses: actions/setup-node@v2
+    #   with:
+    #     node-version: '20'
 
     # - name: Install dependencies and run Cypress test
     #   run: |
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: ${{ env.IAM_ROLE_ARN }}
         role-duration-seconds: 900  # Adjust as per your requirements
