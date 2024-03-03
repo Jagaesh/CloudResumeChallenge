@@ -22,7 +22,7 @@ permissions:
 
 # Define actions
 jobs:
-  test:
+  test_website:
     runs-on: ubuntu-latest
     steps:
       - name: Do nothing placeholder action
@@ -38,8 +38,8 @@ jobs:
     #     npm install
     #     npm run cypress:test
 
-  deploy:
-    needs: test
+  sync_bucket:
+    needs: test_website
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code

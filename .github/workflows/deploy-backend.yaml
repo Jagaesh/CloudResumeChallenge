@@ -23,7 +23,7 @@ permissions:
 
 # Define actions
 jobs:
-  test:
+  test_template:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -41,9 +41,9 @@ jobs:
       env:
         AWS_DEFAULT_REGION: ${{ env.AWS_REGION }}
 
-  deploy:
+  deploy_template:
     runs-on: ubuntu-latest
-    needs: test
+    needs: test_template
     steps:
     - name: Configure AWS credentials for Deployment
       uses: aws-actions/configure-aws-credentials@v4
