@@ -6,6 +6,8 @@ on:
     branches:
       - main
       - features
+    # paths:
+    #   - 'backend/**'  # Trigger only when changes are made in the backend directory
 
 # Define variables
 env:

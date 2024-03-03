@@ -6,7 +6,9 @@ on:
     branches:
       - main
       - features
-
+    # paths:
+    #   - 'frontend/**'  # Trigger only when changes are made in the frontend directory
+  
 # Define variables
 env:
   AWS_REGION: ap-northeast-2  # Replace with your desired AWS region
@@ -49,4 +51,5 @@ jobs:
 
     - name: Deploy Frontend to S3 Bucket
       run: |
+        echo "Current directory: $(pwd)"
         aws s3 sync ./frontend s3://${{ env.S3_BUCKET_NAME }} --delete --region ${{ env.AWS_REGION }}
