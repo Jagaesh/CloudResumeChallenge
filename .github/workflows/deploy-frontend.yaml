@@ -52,5 +52,5 @@ jobs:
     - name: Deploy Frontend to S3 Bucket
       run: |
         echo "Current directory: $(pwd)"
-        ls -d */
+        ls
         aws s3 sync ./frontend s3://${{ env.S3_BUCKET_NAME }} --delete --region ${{ env.AWS_REGION }}
