@@ -10,7 +10,7 @@ on:
 # Define variables
 env:
   AWS_REGION: ap-northeast-2  # Replace with your desired AWS region
-  IAM_ROLE_ARN: arn:aws:iam::533267111936:role/CloudFormationAdminAccess  # Replace with the IAM role ARN
+  IAM_ROLE_ARN: arn:aws:iam::058264555742:role/GitHubActionsCloudResumeChallengeRole  # Replace with the IAM role ARN
   STACK_NAME: CloudResumeChallengeStack  # Replace with your CloudFormation stack name
   TEMPLATE_PATH: backend/cloudformation/backend-template.yaml  # Replace with the path to your CloudFormation template
 
