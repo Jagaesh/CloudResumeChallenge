@@ -4,7 +4,7 @@ name: Test Frontend and Deploy to S3 Bucket
 on:
   push:
     branches:
-      - main
+      # - main
       - features
     # paths:
     #   - 'frontend/**'  # Trigger only when changes are made in the frontend directory
