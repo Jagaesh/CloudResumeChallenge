@@ -13,7 +13,7 @@ on:
 env:
   AWS_REGION: ap-northeast-2  # Replace with your desired AWS region
   IAM_ROLE_ARN: arn:aws:iam::058264555742:role/GitHubActionsCloudResumeChallengeRole  # Replace with the IAM role ARN
-  S3_BUCKET_NAME: mrbrown-cloud-resume-challenge  # Replace with your S3 bucket name
+  S3_BUCKET_NAME: charlescloudjourney.com  # Replace with your S3 bucket name
 
 # Define permissions
 permissions:
