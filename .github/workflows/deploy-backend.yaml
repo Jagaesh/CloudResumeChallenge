@@ -14,6 +14,11 @@ env:
   STACK_NAME: CloudResumeChallengeStack  # Replace with your CloudFormation stack name
   TEMPLATE_PATH: backend/cloudformation/backend-template.yaml  # Replace with the path to your CloudFormation template
 
+# Define permissions
+permissions:
+  id-token: write
+  contents: read
+
 # Define actions
 jobs:
   test:
