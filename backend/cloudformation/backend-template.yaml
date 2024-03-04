@@ -7,84 +7,12 @@ Parameters:
     Description: Name for the S3 bucket to host the website
     Default: mrbrown-cloud-resume-challenge
 
-  SourceBucketName:
-    Type: String
-    Description: Name of the source S3 bucket from which to copy files
-    Default: charlescloudjourney.com
-
 Resources:
   # S3 Bucket for Cloud Resume Challenge
   CloudResumeChallengeBucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref CloudResumeChallengeBucketName
-
-  # IAM Role for the UploadFiles Lambda Function
-  UploadFilesRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
-            Action: sts:AssumeRole
-      Policies:
-        - PolicyName: UploadFilesPolicy
-          PolicyDocument:
-            Version: '2012-10-17'
-            Statement:
-              - Effect: Allow
-                Action:
-                  - s3:PutObject  # Needed for put_object
-                  - s3:GetObject  # Needed for copy_object
-                Resource: !Sub "arn:aws:s3:::${CloudResumeChallengeBucketName}/*"
-
-  # Lambda Function to Upload Files
-  UploadFilesFunction:
-    Type: AWS::Lambda::Function
-    Properties:
-      Handler: index.lambda_handler
-      Role: !GetAtt UploadFilesRole.Arn
-      Runtime: python3.9
-      Code:
-        ZipFile: |
-          import boto3
-
-          def lambda_handler(event, context):
-              s3 = boto3.client('s3')
-              try:
-                  # Copy index.html from source bucket to destination bucket
-                  s3.copy_object(
-                      CopySource={'Bucket': !Ref SourceBucketName, 'Key': 'index.html'},
-                      Bucket: !Ref CloudResumeChallengeBucketName,
-                      Key: 'index.html'
-                  )
-
-                  # Copy pexels-serpstat-572056.jpg from source bucket to destination bucket
-                  s3.copy_object(
-                      CopySource={'Bucket': !Ref SourceBucketName, 'Key': 'pexels-serpstat-572056.jpg'},
-                      Bucket: !Ref CloudResumeChallengeBucketName,
-                      Key: 'pexels-serpstat-572056.jpg'
-
-                  # Copy AddOneToVisitCountCode.zip from source bucket to destination bucket
-                  s3.copy_object(
-                      CopySource={'Bucket': !Ref SourceBucketName, 'Key': 'AddOneToVisitCountCode.zip'},
-                      Bucket: !Ref CloudResumeChallengeBucketName,
-                      Key: 'AddOneToVisitCountCode.zip'
-
-                  )
-
-                  return {
-                      'statusCode': 200,
-                      'body': 'Files uploaded successfully'
-                  }
-              except Exception as e:
-                  return {
-                      'statusCode': 500,
-                      'body': f'Error uploading files: {str(e)}'
-                  }
 
   # Origin Access Control Configuration
   OriginAccessControlPolicy:
