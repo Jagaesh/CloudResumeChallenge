@@ -4,10 +4,11 @@ name: Test and Deploy CloudFormation Stack
 on:
   push:
     branches:
-      - main
-    #   - features
-    # paths:
-    #   - 'backend/**'  # Trigger only when changes are made in the backend directory
+      # - main
+      - features
+    paths:
+      - 'backend/**'  # Trigger only when changes are made in the backend directory
+      - '.github/workflows/deploy-backend.yaml'
 
 # Define variables
 env:
