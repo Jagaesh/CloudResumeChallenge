@@ -46,6 +46,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: test_template
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
     - name: Configure AWS credentials for Deployment
       uses: aws-actions/configure-aws-credentials@v4
       with:
