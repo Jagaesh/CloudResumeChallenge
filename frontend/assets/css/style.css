@@ -121,7 +121,7 @@ body{
     border-radius: 2em;
 }
 
-.cv-block.info .education.group .organization{
+.cv-block.info .work-experience.group .organization{
     background-color: #20c997; 
 }
 
@@ -174,9 +174,13 @@ body{
     bottom: 4px;
 }
 
-.cv-block.info .hobbies p{
+.cv-block.info .hobbies{
+    text-align: center;
     max-width: 700px;
     margin: auto;
+}
+
+.cv-block.info .hobbies p{
     font-size: 1.2em;
     margin-bottom: 30px;
 }
