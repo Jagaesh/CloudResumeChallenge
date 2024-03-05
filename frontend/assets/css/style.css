@@ -67,7 +67,6 @@ body{
 }
 
 .cv-block.block-intro .btn {
-  font-size: 1.0em;
   padding: 0.375rem 1rem;
   border-radius: 2em;
  }
@@ -155,7 +154,7 @@ body{
     font-weight: bold;
 }
 
-.cv-block #skills .row{
+.cv-block #skills .row.justify-content-center{
     margin-bottom: 100px;
 }
 
@@ -200,7 +199,6 @@ body{
 }
 
 .cv-block.info .hobbies .btn {
-    font-size: 0.8em;
     padding: 0.375rem 1rem;
     border-radius: 2em;
     text-align: center;
