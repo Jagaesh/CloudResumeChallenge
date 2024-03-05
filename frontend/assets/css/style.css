@@ -180,6 +180,11 @@ body{
     font-size: 1.2em;
 }
 
+.cv-block.info .btn {
+    padding: 0.375rem 1rem;
+    border-radius: 2em;
+   }
+
 .page-footer{
     padding-top: 32px;
     border-top: 1px solid #ddd;
