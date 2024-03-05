@@ -13,6 +13,22 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref CloudResumeChallengeBucketName
+      AccessControl: PublicRead # Allow public read access
+      WebsiteConfiguration:
+        IndexDocument: index.html # Specify the index document for the website
+
+  # Bucket Policy to Allow Public Access
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref CloudResumeChallengeBucket
+      PolicyDocument:
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: "*"
+            Action: s3:GetObject
+            Resource: !Sub "arn:aws:s3:::${CloudResumeChallengeBucket}/*"
 
   # Origin Access Control Configuration
   OriginAccessControlPolicy:
