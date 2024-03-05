@@ -144,6 +144,11 @@ body{
     text-align: center;
 }
 
+.cv-block.info .hobbies .work-experience{
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
 .cv-block.info .work-experience h3,
 .cv-block.info .education h3{
     font-weight: bold;
