@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Automates the deployment of ressources to host a Cloud Resume Challenge website on S3
+Description: Automates the deployment of resources to host a Cloud Resume Challenge website on S3
 
 Parameters:
   CloudResumeChallengeBucketName:
@@ -60,7 +60,7 @@ Resources:
                   - dynamodb:PutItem
                 Resource: !GetAtt VisitorsTable.Arn
 
-  # Lambda Function to Add DynanoDB Item to VisitorsTable
+  # Lambda Function to Add DynamoDB Item to VisitorsTable
   AddAnyVisitorFunction:
     Type: AWS::Lambda::Function
     Properties:
