@@ -195,6 +195,7 @@ body{
 }
 
 .cv-block.info .hobbies p{
+    text-align: justify;
     font-size: 1.2em;
     margin-bottom: 30px;
 }
