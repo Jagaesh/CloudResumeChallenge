@@ -140,6 +140,10 @@ body{
     margin-bottom: 5px;
 }
 
+.cv-block.info .work-experience{
+    text-align: center;
+}
+
 .cv-block.info .work-experience h3,
 .cv-block.info .education h3{
     font-weight: bold;
