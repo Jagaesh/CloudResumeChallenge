@@ -155,7 +155,7 @@ body{
 }
 
 .cv-block #skills .row.justify-content-center{
-    margin-bottom: 100px;
+    margin-bottom: 40px;
 }
 
 .cv-block .info-card{
@@ -168,6 +168,7 @@ body{
     margin-top: 0;
     margin-bottom: 24px !important;
     font-size: 1.4rem;
+    text-align: center;
 }
 
 .cv-block .info-card.skills h3{
