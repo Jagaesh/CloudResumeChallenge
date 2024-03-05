@@ -179,13 +179,14 @@ body{
     margin: auto;
     font-size: 1.2em;
     margin-bottom: 30px;
-    text-align: center;
 }
 
 .cv-block.info .hobbies .btn {
     padding: 0.375rem 1rem;
     border-radius: 2em;
     text-align: center;
+    display: block;
+    margin: auto;
    }
 
 .page-footer{
