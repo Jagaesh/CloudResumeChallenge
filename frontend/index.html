@@ -43,7 +43,9 @@
             <img class="img-fluid rounded-circle" src="assets/img/avatar.jpg">
           </div>
           <p>Hello! I am <strong>Charles Mallet</strong>. This website is being powered by Amazon S3. Discover my take on the Cloud Resume Challenge.</p>
-          <div id="visitCountDisplay">Loading...</div>
+          <div id="visitCountDisplay">
+            <p>Loading...<br><br></p>
+          </div>
           <p>Want to know more ? Check this awesome blog !<br></p>
           <a href="https://charlescloudjourney.com/" class="btn btn-outline-primary">Blog</a>
         </div>
@@ -69,14 +71,14 @@
               <div class="row">
                 <div class="col-md-6">
                   <h3>Chunk 2: Building the API</h3>
-                  <h4 class="organization">Application Programming Interface</h4>
+                  <h4 class="organization">API</h4>
                 </div>
                 <div class="col-md-6">
                   <time class="period">~10 hours</time>
                 </div>
               </div>
-              <p class="text-muted">In this chunk, participants develop a serverless API (backend) on AWS that updates a visitor counter in a database.
-                Services used for API creation are DynamoDB for data storage, AWS API Gateway and Lambda functions.</p>
+              <p class="text-muted">The goal here is to develop a serverless API on AWS that updates a visit counter in a database.
+                Services used are DynamoDB for data storage, AWS API Gateway and Lambda functions.</p>
             </div>
             <div class="item">
               <div class="row">
@@ -88,7 +90,7 @@
                   <time class="period">~15 hours</time>
                 </div>
               </div>
-              <p class="text-muted">In this section, participants connect the resume website to the serverless API, enabling the display of the visitor counter on the homepage.
+              <p class="text-muted">Now, participants will connect the resume website to the serverless API, enabling the display of the visit counter on the homepage.
                 Additionally, automated tests help ensuring the functionality of the code.</p>
             </div>
             <div class="item">
@@ -219,5 +221,43 @@
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script src="assets/js/script.js"></script>
+  <script>
+    // Function to make API call and update VisitCount value
+    function fetchVisitCount() {
+      // Check if the function has been called before
+      const localVisitCount = localStorage.getItem('visitCount');
+
+      if (localVisitCount === null) {
+        const apiEndpoint = 'https://cjvtiab4sb.execute-api.ap-northeast-2.amazonaws.com/visitcount';
+
+        // Make the API call using Fetch API
+        fetch(apiEndpoint)
+          .then(response => response.json())
+          .then(data => {
+            // Extract VisitCount value from the API response
+            console.log('API Response:', data);
+            const serverVisitCount = data.UpdatedAttributes.VisitCount;
+
+            // Set VisitCount in localStorage
+            localStorage.setItem('visitCount', serverVisitCount);
+
+            // Update the display content
+            document.getElementById('visitCountDisplay').innerText = `You are the ${serverVisitCount}th visitor!`;
+          })
+          .catch(error => {
+            console.error('Error fetching VisitCount:', error);
+          });
+      } else {
+        // Visit count already present in localStorage, update the display
+        document.getElementById('visitCountDisplay').innerText = `You are the ${localVisitCount}th visitor!`;
+      }
+    }
+
+    // Call the fetchVisitCount function when the page loads
+    window.onload = function () {
+      // Fetch visit count after a short delay (simulating loading time)
+      setTimeout(fetchVisitCount, 1000);
+    };
+  </script>
 </html>
 
