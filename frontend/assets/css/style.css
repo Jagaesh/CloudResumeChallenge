@@ -178,6 +178,8 @@ body{
     max-width: 700px;
     margin: auto;
     font-size: 1.2em;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 .cv-block.info .hobbies .btn {
