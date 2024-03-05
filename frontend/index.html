@@ -11,7 +11,7 @@
   <body>
    <nav class="navbar fixed-top navbar-expand-lg navbar-dark page-navbar gradient">
       <div class="container">
-        <a class="navbar-brand logo" href="#">My Cloud Resume Challenge</a>
+        <a class="navbar-brand logo" href="#">Cloud Resume Challenge</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -43,50 +43,70 @@
             <img class="img-fluid rounded-circle" src="assets/img/avatar.jpg">
           </div>
           <p>Hello! I am <strong>Charles Mallet</strong>. This website is being powered by Amazon S3. Discover my take on the Cloud Resume Challenge.</p>
-          <p>Want to know more ? Check my awesome blog !
-          </p>
+          <p>Want to know more ? Check this awesome blog !<br></p>
           <a href="https://charlescloudjourney.com/" class="btn btn-outline-primary">Blog</a>
         </div>
       </section>
       <section class="cv-block info">
         <div class="container">
           <div class="work-experience group" id="work-experience">
-            <h2 class="text-center">Work Experience</h2>
+            <h2 class="text-center">The Four Chunks</h2>
             <div class="item">
               <div class="row">
                 <div class="col-md-6">
-                  <h3>Web Developer</h3>
-                  <h4 class="organization">Amazing Co.</h4>
+                  <h3>Chunk 1: Building the Front End</h3>
+                  <h4 class="organization">Static Website</h4>
                 </div>
                 <div class="col-md-6">
-                  <time class="period">10/2013 - 04/2015</time>
+                  <time class="duration">~15 hours</time>
                 </div>
               </div>
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget velit ultricies, feugiat est sed, efficitur nunc, vivamus vel accumsan dui.</p>
+              <p class="text-muted">In this chunk, participants build the frontend of their cloud-hosted resume, deploying it to a live URL for sharing.
+                Steps include writing the resume in HTML, styling it with CSS, deploying it as a static website on Amazon S3, ensuring HTTPS security with Amazon CloudFront, and pointing a custom DNS domain name to the CloudFront distribution.</p>
             </div>
             <div class="item">
               <div class="row">
                 <div class="col-md-6">
-                  <h3>Front End Developer</h3>
-                  <h4 class="organization">Innovative Org.</h4>
+                  <h3><div class="item">
+              <div class="row">
+                <div class="col-md-6">
+                  <h3>Chunk 2: Building the API</h3>
+                  <h4 class="organization">Visit Counter</h4>
                 </div>
                 <div class="col-md-6">
-                  <time class="period">05/2015 - 12/2017</time>
+                  <time class="duration">~10 hours</time>
                 </div>
               </div>
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget velit ultricies, feugiat est sed, efficitur nunc, vivamus vel accumsan dui.</p>
+              <p class="text-muted">In this chunk, participants develop a serverless API on AWS that updates a visitor counter in a database.
+                Using DynamoDB for data storage and AWS API Gateway with Lambda functions for API creation, they establish a robust backend infrastructure.</p>
             </div>
             <div class="item">
               <div class="row">
                 <div class="col-md-6">
-                  <h3>Web Developer</h3>
-                  <h4 class="organization">Special Inc.</h4>
+                  <h3>Chunk 3: Front-end / Back-end Integration</h3>
+                  <h4 class="organization">Testing</h4>
                 </div>
                 <div class="col-md-6">
-                  <time class="period">12/2017 - Present</time>
+                  <time class="duration">~15 hours</time>
                 </div>
               </div>
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget velit ultricies, feugiat est sed, efficitur nunc, vivamus vel accumsan dui.</p>
+              <p class="text-muted">In this section, participants merge the front-end and back-end components of their Cloud Resume Challenge project.
+                They connect the resume website to the serverless API, enabling the display of the visitor counter on their homepage.
+                Additionally, automated tests help ensuring the functionality of the code.</p>
+            </div>
+            <div class="item">
+              <div class="row">
+                <div class="col-md-6">
+                  <h3>Chunk 4: Automation / CI</h3>
+                  <h4 class="organization">CI/CD Pipelines</h4>
+                </div>
+                <div class="col-md-6">
+                  <time class="duration">~20 hours</time>
+                </div>
+              </div>
+              <p class="text-muted">In this section, participants focus on automating the deployment process and implementing continuous integration (CI) for their Cloud Resume Challenge project.
+                They define their cloud resources using infrastructure-as-code (IaC) principles, utilizing CLoudFormation templates for backend resources.
+                Finally, participants set up CI/CD pipelines using GitHub Actions, ensuring that updates to the codebase trigger automated testing and deployment processes for both backend and frontend components.</p>
             </div>
           </div>
           <div class="education group" id="education">
@@ -98,7 +118,7 @@
                   <h4 class="organization">Albert Einstein School</h4>
                 </div>
                 <div class="col-md-6">
-                  <time class="period">09/2005 - 05/2010</time>
+                  <time class="duration">09/2005 - 05/2010</time>
                 </div>
               </div>
               <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget velit ultricies, feugiat est sed, efficitur nunc, vivamus vel accumsan dui.</p>
@@ -110,7 +130,7 @@
                   <h4 class="organization">Stephen Hawking College</h4>
                 </div>
                 <div class="col-md-6">
-                  <time class="period">09/2010 - 06/2015</time>
+                  <time class="duration">09/2010 - 06/2015</time>
                 </div>
               </div>
               <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget velit ultricies, feugiat est sed, efficitur nunc, vivamus vel accumsan dui.</p>
@@ -120,32 +140,32 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="skills info-card">
-                  <h2>Project Skills</h2>
-                  <h3>Web (S3 & Cloudfront)</h3>
+                  <h2>Skills Used</h2>
+                  <h3>S3 & CloudFront</h3>
                   <div class="progress">
                     <div class="progress-bar" role="progressbar" aria-valuenow="70"
                     aria-valuemin="0" aria-valuemax="100" style="width:90%">
                     </div>
                   </div>
-                  <h3>API (API Gateway)</h3>
+                  <h3>API Gateway</h3>
                   <div class="progress">
                     <div class="progress-bar" role="progressbar" aria-valuenow="70"
                     aria-valuemin="0" aria-valuemax="100" style="width:90%">
                     </div>
                   </div>
-                  <h3>Test (Cypress)</h3>
+                  <h3>Cypress</h3>
                   <div class="progress">
                     <div class="progress-bar" role="progressbar" aria-valuenow="70"
                     aria-valuemin="0" aria-valuemax="100" style="width:90%">
                     </div>
                   </div>
-                  <h3>Automation (CloudFormation)</h3>
+                  <h3>CloudFormation</h3>
                   <div class="progress">
                     <div class="progress-bar" role="progressbar" aria-valuenow="70"
                     aria-valuemin="0" aria-valuemax="100" style="width:100%">
                     </div>
                   </div>
-                  <h3>CI/CD (GitHub Actions)</h3>
+                  <h3>GitHub Actions</h3>
                   <div class="progress">
                     <div class="progress-bar" role="progressbar" aria-valuenow="70"
                     aria-valuemin="0" aria-valuemax="100" style="width:100%">
@@ -194,8 +214,8 @@
           </div>
           <div class="hobbies group" id="hobbies">
             <h2 class="text-center">About</h2>
-            <p class="text-center text-muted">The Cloud Resume Challenge is an amazing opportunity to demonstrate cloud computing skills. It was first introduced by Forrest Brazeal on Twitter and LinkedIn in 2020. in 16 steps, participants deploy a personal website on cloud platforms like AWS. It is the best practical way to gain hands-on experience with cloud services.<br></p>
-            <p class="text-center text-muted">Ready to take the challenge? Get started now!</p>
+            <p class="text-center text-muted">The Cloud Resume Challenge is an amazing opportunity to demonstrate cloud computing skills. It was introduced by Forrest Brazeal on Twitter and LinkedIn in 2020. in 16 steps, participants deploy a personal website on cloud platforms like AWS. It is the best practical way to gain hands-on experience with cloud services.</p>
+            <p class="text-center text-muted"><br>Ready to take the challenge? Get started now!</p>
             <a href="https://cloudresumechallenge.dev/" class="btn btn-outline-primary">The Challenge</a>
           </div>
         </div>
