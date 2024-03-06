@@ -58,7 +58,7 @@
                 <h4 class="organization">Albert Einstein School</h4>
               </div>
               <div id="visitCountDisplay">
-                <p>Loading...</p>
+                <h4 class="organization">Loading...</h4>
               </div>
               <div>
                 <h3>Visitor!</h3>
@@ -278,14 +278,14 @@
             localStorage.setItem('visitCount', serverVisitCount);
 
             // Update the display content
-            document.getElementById('visitCountDisplay').innerText = `You are the ${serverVisitCount}th visitor!`;
+            document.getElementById('visitCountDisplay').innerText = `${serverVisitCount}th`;
           })
           .catch(error => {
             console.error('Error fetching VisitCount:', error);
           });
       } else {
         // Visit count already present in localStorage, update the display
-        document.getElementById('visitCountDisplay').innerText = `You are the ${localVisitCount}th visitor!`;
+        document.getElementById('visitCountDisplay').innerText = `${localVisitCount}th`;
       }
     }
 
