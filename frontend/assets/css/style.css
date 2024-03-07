@@ -67,7 +67,6 @@ body{
 }
 
 .cv-block.block-intro .btn {
-  background-color: #ed36ad; 
   padding: 0.375rem 1rem;
   border-radius: 2em;
  }
@@ -123,7 +122,7 @@ body{
 }
 
 .cv-block.info .work-experience.group .organization{
-    background-color: #ed36ad; 
+    background-color: #0ea0ff; 
     font-size: 2.0em;
     font-weight: bold;
     margin-top: 40px;
@@ -193,12 +192,15 @@ body{
     height: 3px;
 }
 
+.cv-block .info-card.contact-info{
+    margin-top: 40px;
+}
+
 .cv-block .info-card.contact-info .icon{
     font-size: 1.3em;
     color: #c9c9c9;
     position: relative;
     bottom: 4px;
-    margin-top: 40px;
 }
 
 .cv-block.info .hobbies{
