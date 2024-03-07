@@ -155,7 +155,7 @@ body{
     margin-bottom: 40px;
 }
 
-.cv-block.info .work-experience h1#visitCountDisplay{
+.cv-block.info .work-experience h4{
     font-size: 2.0em;
     font-weight: bold;
     margin-top: 80px;
@@ -290,7 +290,7 @@ body{
         padding-bottom:1.2rem;
     }
 
-    .page-navbar.fixed-top + .page{
+    .portfolio-navbar.fixed-top + .page{
         padding-top: 6rem;
     }
 }
