@@ -156,6 +156,7 @@ body{
 }
 
 .cv-block.info .work-experience h1{
+    font-size: 2.0em;
     font-weight: bold;
     margin-top: 80px;
     margin-bottom: 80px;
