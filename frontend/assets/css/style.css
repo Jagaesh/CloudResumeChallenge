@@ -202,10 +202,6 @@ body{
     height: 3px;
 }
 
-.cv-block .info-card.contact-info{
-    margin-top: 100px;
-}
-
 .cv-block .info-card.contact-info .icon{
     font-size: 1.3em;
     color: #c9c9c9;
