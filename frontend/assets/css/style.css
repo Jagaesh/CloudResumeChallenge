@@ -66,6 +66,13 @@ body{
     margin-bottom: 30px;
 }
 
+.cv-block.block-intro .btn {
+  color: #ed36ad;
+  border-color: #ed36ad;
+  padding: 0.375rem 1rem;
+  border-radius: 2em;
+ }
+
 .cv-block.block-intro .avatar{
     width: 150px;
     height: 150px;
@@ -143,7 +150,7 @@ body{
 .cv-block.info .work-experience{
     text-align: center;
     font-size: 1.2em;
-    margin-bottom: 80px;
+    margin-bottom: 30px;
 }
 
 .cv-block.info .work-experience h3{
@@ -153,15 +160,7 @@ body{
     margin-bottom: 20px;
 }
 
-.cv-block.info .education .btn{
-    color: #ed36ad;
-    border-color: #ed36ad;
-    padding: 0.375rem 1rem;
-    border-radius: 2em;
-    text-align: center;
-   }
-
-.cv-block.info .education .check-blog{
+.cv-block.info .education .intro-text{
     text-align: center;
     font-size: 1.2em;
     margin-bottom: 30px;
@@ -199,7 +198,7 @@ body{
 }
 
 .cv-block .info-card.contact-info{
-    margin-top: 80px;
+    margin-top: 100px;
 }
 
 .cv-block .info-card.contact-info .icon{
