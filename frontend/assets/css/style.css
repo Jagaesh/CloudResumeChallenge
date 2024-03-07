@@ -113,19 +113,22 @@ body{
 }
 
 .cv-block.info .group .organization{
+    font-size: 0.85em;
     background-color: #0ea0ff;
     display: inline-block;
     color: #fff;
-    padding: 16px 24px;
+    padding: 2px 8px;
     border-radius: 2em;
 }
 
 .cv-block.info .work-experience.group .organization{
+    font-size: 2.0em;
+    padding: 12px 24px;
     background-color: #20c997; 
 }
 
 .cv-block.info .education.group .organization{
-    font-size: 0.85em; 
+    font-size: 0.85em;
 }
 
 .cv-block.info .group .item{
