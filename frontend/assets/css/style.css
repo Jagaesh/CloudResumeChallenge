@@ -67,7 +67,7 @@ body{
 }
 
 .cv-block.block-intro .btn {
-  background-color: #ed36ad;
+  color: #ed36ad;
   padding: 0.375rem 1rem;
   border-radius: 2em;
  }
@@ -194,7 +194,7 @@ body{
 }
 
 .cv-block .info-card.contact-info{
-    margin-top: 40px;
+    margin-top: 80px;
 }
 
 .cv-block .info-card.contact-info .icon{
