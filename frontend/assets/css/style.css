@@ -122,7 +122,6 @@ body{
 }
 
 .cv-block.info .work-experience.group .organization{
-    font-size: 1.2em;
     background-color: #20c997; 
 }
 
@@ -160,9 +159,14 @@ body{
     font-weight: bold;
     margin-top: 80px;
     margin-bottom: 80px;
+    background-color: #20c997;
+    display: inline-block;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 2em;
 }
 
-.cv-block.info .work-experience p{
+.cv-block.info #work-experience p{
     font-weight: bold;
     margin-top: 100px;
     margin-bottom: 100px;
