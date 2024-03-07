@@ -168,6 +168,7 @@ body{
 }
 
 .cv-block .info-card{
+    max-width: 800px;
     padding: 40px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
     height: 100%;
