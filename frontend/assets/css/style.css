@@ -112,8 +112,8 @@ body{
     opacity: 0.8;
 }
 
-.cv-block.info .group .organization{
-    /* font-size: 0.85em; */
+.cv-block.info .education.group .organization{
+    font-size: 0.85em;
     background-color: #0ea0ff;
     display: inline-block;
     color: #fff;
@@ -123,10 +123,14 @@ body{
 
 .cv-block.info .work-experience.group .organization{
     font-size: 2.0em;
-    background-color: #20c997;
     font-weight: bold;
     margin-top: 80px;
     margin-bottom: 80px;
+    background-color: #20c997;
+    display: inline-block;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 2em;
 }
 
 .cv-block.info .group .item{
