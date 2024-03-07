@@ -154,16 +154,17 @@ body{
 }
 
 .cv-block.info .work-experience h3{
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .cv-block.info .education .intro-text{
     text-align: center;
     font-size: 1.2em;
-    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-bottom: 45px;
 }
 
 .cv-block.info .education h3{
