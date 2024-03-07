@@ -166,10 +166,6 @@ body{
     font-weight: bold;
 }
 
-.cv-block #skills .row.justify-content-center{
-    margin-bottom: 80px;
-}
-
 .cv-block .info-card{
     padding: 40px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
@@ -185,6 +181,7 @@ body{
 
 .cv-block .info-card.skills h3{
     margin-top: 25px;
+    margin-bottom: 80px;
     font-size: 1rem;
     font-weight: bold;
 }
