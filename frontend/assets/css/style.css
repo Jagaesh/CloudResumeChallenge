@@ -112,7 +112,7 @@ body{
     opacity: 0.8;
 }
 
-.cv-block.info .education.group .organization{
+.cv-block.info .group .organization{
     font-size: 0.85em;
     background-color: #0ea0ff;
     display: inline-block;
@@ -122,15 +122,7 @@ body{
 }
 
 .cv-block.info .work-experience.group .organization{
-    font-size: 2.0em;
-    font-weight: bold;
-    margin-top: 80px;
-    margin-bottom: 80px;
-    background-color: #20c997;
-    display: inline-block;
-    color: #fff;
-    padding: 2px 8px;
-    border-radius: 2em;
+    background-color: #20c997; 
 }
 
 .cv-block.info .group .item{
@@ -163,7 +155,19 @@ body{
     margin-bottom: 40px;
 }
 
+.cv-block.info .work-experience h1{
+    font-weight: bold;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    background-color: #20c997;
+    display: inline-block;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 2em;
+}
+
 .cv-block.info .work-experience p{
+    font-weight: bold;
     margin-top: 100px;
     margin-bottom: 100px;
 }
