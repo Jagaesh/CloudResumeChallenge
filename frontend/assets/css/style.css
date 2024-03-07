@@ -149,6 +149,10 @@ body{
 
 .cv-block.info .work-experience{
     text-align: center;
+}
+
+.cv-block.info .work-experience{
+    /* text-align: center; */
     font-size: 1.2em;
     margin-bottom: 30px;
 }
@@ -164,8 +168,8 @@ body{
 .cv-block.info .work-experience h3{
     font-size: 1.3rem;
     font-weight: bold;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .cv-block.info .education h3{
