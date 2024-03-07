@@ -166,8 +166,7 @@ body{
     border-radius: 2em;
 }
 
-.cv-block.info #work-experience p{
-    font-weight: bold;
+.cv-block.info .work-experience.group p{
     margin-top: 100px;
     margin-bottom: 100px;
 }
