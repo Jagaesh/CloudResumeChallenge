@@ -113,7 +113,7 @@ body{
 }
 
 .cv-block.info .group .organization{
-    font-size: 0.85em;
+    /* font-size: 0.85em; */
     background-color: #0ea0ff;
     display: inline-block;
     color: #fff;
@@ -159,7 +159,7 @@ body{
     margin-bottom: 40px;
 }
 
-.cv-block.info .work-experience.group p{
+.cv-block.info .work-experience p{
     margin-top: 100px;
     margin-bottom: 100px;
 }
