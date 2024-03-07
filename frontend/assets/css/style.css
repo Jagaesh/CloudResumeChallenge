@@ -67,6 +67,8 @@ body{
 }
 
 .cv-block.block-intro .btn {
+  color: #ed36ad;
+  border-color: #ed36ad;
   padding: 0.375rem 1rem;
   border-radius: 2em;
  }
