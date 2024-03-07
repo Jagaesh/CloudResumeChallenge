@@ -143,14 +143,14 @@ body{
 .cv-block.info .work-experience{
     text-align: center;
     font-size: 1.2em;
-    margin-bottom: 30px;
+    margin-bottom: 80px;
 }
 
 .cv-block.info .work-experience h3{
     font-size: 1.3rem;
     font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .cv-block.info .education .btn{
