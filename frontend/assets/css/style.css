@@ -155,7 +155,7 @@ body{
     margin-bottom: 40px;
 }
 
-.cv-block.info .work-experience h4{
+.cv-block.info .work-experience h1{
     font-size: 2.0em;
     font-weight: bold;
     margin-top: 80px;
@@ -165,12 +165,6 @@ body{
     color: #fff;
     padding: 2px 8px;
     border-radius: 2em;
-}
-
-.cv-block.info .work-experience p{
-    font-weight: bold;
-    margin-top: 100px;
-    margin-bottom: 100px;
 }
 
 .cv-block.info .education h3{
