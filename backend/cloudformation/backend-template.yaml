@@ -13,14 +13,14 @@ Parameters:
     Default: mrbrown-cloud-resume-challenge
 
   CloudResumeChallengeAllowedOrigins:
-    Type: List<String>
+    Type: CommaDelimitedList
     Description: List of allowed origins for CORS configuration
-    Default: ["https://charlescloudjourney.com", "https://s3.ap-northeast-2.amazonaws.com"]
+    Default: "https://charlescloudjourney.com, https://s3.ap-northeast-2.amazonaws.com"
 
   CloudFrontAliases:
-    Type: List<String>
+    Type: CommaDelimitedList
     Description: Domain name aliases for CloudFront distribution
-    Default: ["charlescloudjourney.com"]
+    Default: "charlescloudjourney.com"
 
   # ACMCertificateArn:
   #   Type: String
