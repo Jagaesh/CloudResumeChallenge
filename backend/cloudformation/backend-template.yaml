@@ -5,7 +5,7 @@ Parameters:
   AWSRegion:
     Type: String
     Description: AWS region where resources will be deployed
-    Default: !Ref 'AWS::Region'  # Default value is the region where the stack is being created
+    Default: !Ref 'AWS::Region'
 
   CloudResumeChallengeBucketName:
     Type: String
