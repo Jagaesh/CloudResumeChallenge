@@ -2,20 +2,30 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: Automates the deployment of resources to host a Cloud Resume Challenge website on S3
 
 Parameters:
+  AWSRegion:
+    Type: String
+    Description: AWS region where resources will be deployed
+    Default: !Ref 'AWS::Region'  # Default value is the region where the stack is being created
+
   CloudResumeChallengeBucketName:
     Type: String
     Description: Name for the S3 bucket to host the website
     Default: mrbrown-cloud-resume-challenge
+
+  CloudResumeChallengeAllowedOrigins:
+    Type: List<String>
+    Description: List of allowed origins for CORS configuration
+    Default: ["https://charlescloudjourney.com", "https://s3.ap-northeast-2.amazonaws.com"]
 
   CloudFrontAliases:
     Type: List<String>
     Description: Domain name aliases for CloudFront distribution
     Default: [charlescloudjourney.com]
 
-  ACMCertificateArn:
-    Type: String
-    Description: ACM certificate ARN for SSL configuration
-    Default: !Sub "arn:aws:acm:us-east-1:${AWS::AccountId}:certificate/1xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
+  # ACMCertificateArn:
+  #   Type: String
+  #   Description: ACM certificate ARN for SSL configuration
+  #   Default: !Sub "arn:aws:acm:us-east-1:${AWS::AccountId}:certificate/1xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
 
   LambdaRuntime:
     Type: String
@@ -64,10 +74,10 @@ Resources:
             ResponsePagePath: /index.html
         HttpVersion: http2
         Aliases: !Ref CloudFrontAliases
-        ViewerCertificate:
-          AcmCertificateArn: !Ref ACMCertificateArn
-          MinimumProtocolVersion: TLSv1.2_2021
-          SslSupportMethod: sni-only
+        # ViewerCertificate:
+        #   AcmCertificateArn: !Ref ACMCertificateArn
+        #   MinimumProtocolVersion: TLSv1.2_2021
+        #   SslSupportMethod: sni-only
         DefaultCacheBehavior:
           AllowedMethods:
             - GET
@@ -80,8 +90,8 @@ Resources:
               Forward: none
           ViewerProtocolPolicy: redirect-to-https
 
-#Bucket Policy for CloudFront to Access S3 Website
-CloudResumeChallengeBucketPolicy:
+  #Bucket Policy for CloudFront to Access S3 Website
+  CloudResumeChallengeBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
       Bucket: !Ref CloudResumeChallengeBucketName
@@ -193,7 +203,7 @@ CloudResumeChallengeBucketPolicy:
                 
                   headers = {
                       'Content-Type': 'application/json',
-                      'Access-Control-Allow-Origin': !Join [",", !Ref CloudFrontAliases],
+                      'Access-Control-Allow-Origin': !Join [", ", !Ref CloudResumeChallengeAllowedOrigins],
                       'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept',
                       'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
                   }
@@ -253,9 +263,7 @@ CloudResumeChallengeBucketPolicy:
       Name: CloudResumeChallengeAPI
       ProtocolType: HTTP
       CorsConfiguration:
-        AllowOrigins:
-          - "https://charlescloudjourney.com"
-          # - "https://s3.ap-northeast-2.amazonaws.com"
+        AllowOrigins: !Ref CloudResumeChallengeAllowedOrigins
         AllowHeaders:
           - "origin"
           - "content-type"
