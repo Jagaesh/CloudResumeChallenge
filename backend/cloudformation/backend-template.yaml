@@ -10,7 +10,7 @@ Parameters:
   CloudFrontAliases:
     Type: List<String>
     Description: Domain name aliases for CloudFront distribution
-    Default: - charlescloudjourney.com
+    Default: [charlescloudjourney.com]
 
   ACMCertificateArn:
     Type: String
