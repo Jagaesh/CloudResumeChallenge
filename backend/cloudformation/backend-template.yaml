@@ -5,7 +5,7 @@ Parameters:
   AWSRegion:
     Type: String
     Description: AWS region where resources will be deployed
-    Default: !Ref 'AWS::Region'
+    Default: ap-northeast-2
 
   CloudResumeChallengeBucketName:
     Type: String
