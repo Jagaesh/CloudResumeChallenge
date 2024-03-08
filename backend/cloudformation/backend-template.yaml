@@ -15,7 +15,7 @@ Parameters:
   CloudResumeChallengeAllowedOrigins:
     Type: CommaDelimitedList
     Description: List of allowed origins for CORS configuration
-    Default: https://charlescloudjourney.com, https://s3.ap-northeast-2.amazonaws.com
+    Default: https://charlescloudjourney.com,https://s3.ap-northeast-2.amazonaws.com
 
   CloudFrontAliases:
     Type: CommaDelimitedList
@@ -203,7 +203,7 @@ Resources:
                 
                   headers = {
                       'Content-Type': 'application/json',
-                      'Access-Control-Allow-Origin': !Join [", ", !Ref CloudResumeChallengeAllowedOrigins],
+                      'Access-Control-Allow-Origin': !Join [",", !Ref CloudResumeChallengeAllowedOrigins],
                       'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept',
                       'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
                   }
