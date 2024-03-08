@@ -7,15 +7,31 @@ Parameters:
     Description: Name for the S3 bucket to host the website
     Default: mrbrown-cloud-resume-challenge
 
+  CloudFrontAliases:
+    Type: List<String>
+    Description: Domain name aliases for CloudFront distribution
+    Default: - charlescloudjourney.com
+
+  ACMCertificateArn:
+    Type: String
+    Description: ACM certificate ARN for SSL configuration
+    Default: !Sub "arn:aws:acm:us-east-1:${AWS::AccountId}:certificate/1xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
+
+  LambdaRuntime:
+    Type: String
+    Description: Runtime for Lambda functions
+    Default: python3.9
+
 Resources:
   # S3 Bucket for Cloud Resume Challenge
   CloudResumeChallengeBucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref CloudResumeChallengeBucketName
+      AccessControl: Private
 
-  # Origin Access Control Configuration
-  OriginAccessControlPolicy:
+  # Origin Access Control Configuration for CloudFront Distribution
+  CloudFrontOriginAccessControl:
     Type: AWS::CloudFront::OriginAccessControl
     Properties:
       OriginAccessControlConfig:
@@ -23,6 +39,63 @@ Resources:
         OriginAccessControlOriginType: s3
         SigningBehavior: always
         SigningProtocol: sigv4
+
+  #CloudFront Distribution to Deploy S3 Website
+  CloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    DependsOn:
+      - CloudResumeChallengeBucket
+    Properties:
+      DistributionConfig:
+        Origins:
+          - DomainName: !Sub "${CloudResumeChallengeBucketName}.s3.${AWS::Region}.amazonaws.com"
+            Id: cloud-resume-challenge-cloudfront-distribution
+            S3OriginConfig:
+              OriginAccessIdentity: ""
+            OriginAccessControlId: !GetAtt CloudFrontOriginAccessControl.Id
+        Enabled: "true"
+        DefaultRootObject: index.html
+        CustomErrorResponses:
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+        HttpVersion: http2
+        Aliases: !Ref CloudFrontAliases
+        ViewerCertificate:
+          AcmCertificateArn: !Ref ACMCertificateArn
+          MinimumProtocolVersion: TLSv1.2_2021
+          SslSupportMethod: sni-only
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+          Compress: true
+          TargetOriginId: cloud-resume-challenge-cloudfront-distribution
+          ForwardedValues:
+            QueryString: "false"
+            Cookies:
+              Forward: none
+          ViewerProtocolPolicy: redirect-to-https
+
+#Bucket Policy for CloudFront to Access S3 Website
+CloudResumeChallengeBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref CloudResumeChallengeBucketName
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: "cloudfront.amazonaws.com"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::${CloudResumeChallengeBucketName}/*"
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}"
 
   # DynamoDB table for storing visitors data
   VisitorsTable:
@@ -66,7 +139,7 @@ Resources:
     Properties:
       Handler: index.lambda_handler
       Role: !GetAtt AddAnyVisitorRole.Arn
-      Runtime: python3.9
+      Runtime: !Ref LambdaRuntime
       Code:
         ZipFile: |
           import boto3
@@ -120,7 +193,7 @@ Resources:
                 
                   headers = {
                       'Content-Type': 'application/json',
-                      'Access-Control-Allow-Origin': 'https://charlescloudjourney.com/, https://s3.ap-northeast-2.amazonaws.com',
+                      'Access-Control-Allow-Origin': !Join [",", !Ref CloudFrontAliases],
                       'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept',
                       'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
                   }
@@ -171,7 +244,7 @@ Resources:
                   return error_response
       Handler: index.lambda_handler
       Role: !GetAtt AddOneToVisitCountRole.Arn
-      Runtime: python3.9
+      Runtime: !Ref LambdaRuntime
 
   # HTTP API to Count Visitors
   CloudResumeChallengeAPI:
@@ -181,7 +254,8 @@ Resources:
       ProtocolType: HTTP
       CorsConfiguration:
         AllowOrigins:
-          - "https://s3.ap-northeast-2.amazonaws.com"
+          - "https://charlescloudjourney.com"
+          # - "https://s3.ap-northeast-2.amazonaws.com"
         AllowHeaders:
           - "origin"
           - "content-type"
