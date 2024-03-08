@@ -12,15 +12,15 @@ Parameters:
     Description: Name for the S3 bucket to host the website
     Default: mrbrown-cloud-resume-challenge
 
-  CloudResumeChallengeAllowedOrigins:
-    Type: String
-    Description: List of allowed origins for CORS configuration (separated by commas)
-    Default: https://charlescloudjourney.com,https://s3.ap-northeast-2.amazonaws.com
+  # CloudResumeChallengeAllowedOrigins:
+  #   Type: String
+  #   Description: List of allowed origins for CORS configuration (separated by commas)
+  #   Default: https://charlescloudjourney.com,https://s3.ap-northeast-2.amazonaws.com
 
-  CloudFrontAliases:
-    Type: String
-    Description: Domain name aliases for CloudFront distribution (separated by commas)
-    Default: charlescloudjourney.com
+  # CloudFrontAliases:
+  #   Type: String
+  #   Description: Domain name aliases for CloudFront distribution (separated by commas)
+  #   Default: charlescloudjourney.com
 
   # ACMCertificateArn:
   #   Type: String
@@ -50,7 +50,7 @@ Resources:
         SigningBehavior: always
         SigningProtocol: sigv4
 
-  #CloudFront Distribution to Deploy S3 Website
+  # CloudFront Distribution to Deploy S3 Website
   CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
     DependsOn:
@@ -73,7 +73,9 @@ Resources:
             ResponseCode: 200
             ResponsePagePath: /index.html
         HttpVersion: http2
-        Aliases: !Split [",", !Ref CloudFrontAliases]
+        Aliases:
+          - charlescloudjourney.com
+        # Aliases: !Split [",", !Ref CloudFrontAliases]
         # ViewerCertificate:
         #   AcmCertificateArn: !Ref ACMCertificateArn
         #   MinimumProtocolVersion: TLSv1.2_2021
@@ -90,7 +92,7 @@ Resources:
               Forward: none
           ViewerProtocolPolicy: redirect-to-https
 
-  #Bucket Policy for CloudFront to Access S3 Website
+  # Bucket Policy for CloudFront to Access S3 Website
   CloudResumeChallengeBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
@@ -203,7 +205,8 @@ Resources:
                 
                   headers = {
                       'Content-Type': 'application/json',
-                      'Access-Control-Allow-Origin': !Ref CloudResumeChallengeAllowedOrigins,
+                      # 'Access-Control-Allow-Origin': !Ref CloudResumeChallengeAllowedOrigins,
+                      'Access-Control-Allow-Origin': 'https://charlescloudjourney.com, https://s3.ap-northeast-2.amazonaws.com',
                       'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept',
                       'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
                   }
@@ -263,7 +266,9 @@ Resources:
       Name: CloudResumeChallengeAPI
       ProtocolType: HTTP
       CorsConfiguration:
-        AllowOrigins: !Split [",", !Ref CloudResumeChallengeAllowedOrigins]
+        # AllowOrigins: !Split [",", !Ref CloudResumeChallengeAllowedOrigins]
+        AllowOrigins:
+          - "https://charlescloudjourney.com"
         AllowHeaders:
           - "origin"
           - "content-type"
