@@ -12,6 +12,21 @@ Parameters:
     Description: Name for the S3 bucket to host the website
     Default: mrbrown-cloud-resume-challenge
 
+  CloudResumeChallengeAllowedOrigins:
+    Type: List<String>
+    Description: List of allowed origins for CORS configuration
+    Default: ["https://charlescloudjourney.com", "https://dzp9wchzsl07v.cloudfront.net/"]
+
+  CloudFrontAliases:
+    Type: List<String>
+    Description: Domain name aliases for CloudFront distribution
+    Default: [charlescloudjourney.com]
+
+  # ACMCertificateArn:
+  #   Type: String
+  #   Description: ACM certificate ARN for SSL configuration
+  #   Default: !Sub "arn:aws:acm:us-east-1:${AWS::AccountId}:certificate/1xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
+
   LambdaRuntime:
     Type: String
     Description: Runtime for Lambda functions
