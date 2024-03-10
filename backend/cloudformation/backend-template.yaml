@@ -71,22 +71,22 @@ Resources:
               Forward: none
           ViewerProtocolPolicy: redirect-to-https
 
-  # # Bucket Policy for CloudFront to Access S3 Website
-  # CloudResumeChallengeBucketPolicy:
-  #   Type: AWS::S3::BucketPolicy
-  #   Properties:
-  #     Bucket: !Ref CloudResumeChallengeBucketName
-  #     PolicyDocument:
-  #       Version: "2012-10-17"
-  #       Statement:
-  #         - Effect: Allow
-  #           Principal:
-  #             Service: "cloudfront.amazonaws.com"
-  #           Action: "s3:GetObject"
-  #           Resource: !Sub "arn:aws:s3:::${CloudResumeChallengeBucketName}/*"
-  #           Condition:
-  #             StringEquals:
-  #               AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}"
+  # Bucket Policy for CloudFront to Access S3 Website
+  CloudResumeChallengeBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref CloudResumeChallengeBucketName
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: "cloudfront.amazonaws.com"
+            Action: "s3:GetObject"
+            Resource: !Sub "arn:aws:s3:::${CloudResumeChallengeBucketName}/*"
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}"
 
   # DynamoDB table for storing visitors data
   VisitorsTable:
