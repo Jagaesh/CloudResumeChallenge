@@ -12,15 +12,15 @@ Parameters:
     Description: Name for the S3 bucket to host the website
     Default: mrbrown-cloud-resume-challenge
 
-  CloudResumeChallengeAllowedOrigins:
-    Type: List<String>
-    Description: List of allowed origins for CORS configuration
-    Default: ["https://charlescloudjourney.com", "https://dzp9wchzsl07v.cloudfront.net/"]
+  CloudResumeChallengeAllowedOrigin:
+    Type: String
+    Description: Allowed origin for HTTP API CORS configuration (https:// in front -> YES -> https://url.com)
+    Default: https://charlescloudjourney.com
 
-  CloudFrontAliases:
-    Type: List<String>
-    Description: Domain name aliases for CloudFront distribution
-    Default: [charlescloudjourney.com]
+  # CloudFrontAlias:
+  #   Type: String
+  #   Description: Domain name alias for CloudFront distribution (https:// in front -> NO -> url.com)
+  #   Default: charlescloudjourney.com
 
   # ACMCertificateArn:
   #   Type: String
@@ -196,10 +196,10 @@ Resources:
           
           def lambda_handler(event, context):
               try:
-                
+
                   headers = {
                       'Content-Type': 'application/json',
-                      'Access-Control-Allow-Origin': 'https://charlescloudjourney.com, https://s3.ap-northeast-2.amazonaws.com',
+                      'Access-Control-Allow-Origin': '',
                       'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept',
                       'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
                   }
@@ -260,7 +260,8 @@ Resources:
       ProtocolType: HTTP
       CorsConfiguration:
         AllowOrigins:
-          - "https://charlescloudjourney.com"
+          - !Ref CloudResumeChallengeAllowedOrigin
+            !GetAtt CloudFrontDistribution.DomainName
         AllowHeaders:
           - "origin"
           - "content-type"
