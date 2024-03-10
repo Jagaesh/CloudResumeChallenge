@@ -93,11 +93,26 @@ Resources:
             ResponseCode: 200
             ResponsePagePath: /index.html
         HttpVersion: http2
-        Aliases:
-          !If
-            - CertificateIsValid
-            - - CloudFrontAlias
-            - !Ref "AWS::NoValue"  # Don't add alias if certificate is not valid
+        # Aliases: !If
+        #   - CertificateIsValid
+        #   - - CloudFrontAlias
+        #   - !Ref AWS::NoValue  # Don't add alias if certificate is not valid
+        # ViewerCertificate:
+        #   AcmCertificateArn: !If
+        #     - CertificateIsValid
+        #     - !Ref AWS::NoValue
+        #     - !Ref CloudfrontCertificateArn
+        #   CloudFrontDefaultCertificate: !If
+        #     - CertificateIsValid
+        #     - true
+        #     - !Ref AWS::NoValue
+        #   SslSupportMethod: !If
+        #     - CertificateIsValid
+        #     - !Ref AWS::NoValue
+        #     - "sni-only"
+          AcmCertificateArn: "arn:aws:acm:us-east-1:Id-of-IAM-User:certificate/1xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
+          MinimumProtocolVersion: TLSv1.2_2021
+          SslSupportMethod: sni-only
         DefaultCacheBehavior:
           AllowedMethods:
             - GET
