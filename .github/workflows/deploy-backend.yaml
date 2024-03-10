@@ -58,9 +58,7 @@ jobs:
 
     - name: Deploy CloudFormation stack
       run: aws cloudformation deploy --template-file ${{ env.TEMPLATE_PATH }} --stack-name ${{ env.STACK_NAME }} --capabilities CAPABILITY_NAMED_IAM
-      continue-on-error: true
 
     - name: Get stack events on failure
+      run: aws cloudformation describe-stack-events --stack-name ${{ env.STACK_NAME }}
       if: failure()
-      run: |
-        aws cloudformation describe-stack-events --stack-name ${{ env.STACK_NAME }}
