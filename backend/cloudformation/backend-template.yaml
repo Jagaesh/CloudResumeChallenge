@@ -12,20 +12,25 @@ Parameters:
     Description: Name for the S3 bucket to host the website
     Default: mrbrown-cloud-resume-challenge
 
+  CertificateDomainName:
+    Type: String
+    Description: Domain name for your blog/resume website (https:// in front -> NO -> url.com)
+    Default: charlescloudjourney.com
+
+  CloudFrontAlias:
+    Type: String
+    Description: Subdomain name alias for the CloudFront distribution (https:// in front -> NO -> url.com)
+    Default: cloud-resume-challenge.charlescloudjourney.com
+
   CloudResumeChallengeAllowedOrigin:
     Type: String
     Description: Allowed origin for HTTP API CORS configuration (https:// in front -> YES -> https://url.com)
-    Default: https://charlescloudjourney.com
+    Default: https://cloud-resume-challenge.charlescloudjourney.com
 
-  # CloudFrontAlias:
-  #   Type: String
-  #   Description: Domain name alias for CloudFront distribution (https:// in front -> NO -> url.com)
-  #   Default: charlescloudjourney.com
-
-  # ACMCertificateArn:
-  #   Type: String
-  #   Description: ACM certificate ARN for SSL configuration
-  #   Default: !Sub "arn:aws:acm:us-east-1:${AWS::AccountId}:certificate/1xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
+  ACMCertificateArn:
+    Type: String
+    Description: ACM certificate ARN to configure SSL for Domain name alias
+    Default: !Sub "arn:aws:acm:us-east-1:${AWS::AccountId}:certificate/1xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
 
   LambdaRuntime:
     Type: String
@@ -48,6 +53,15 @@ Resources:
         OriginAccessControlOriginType: s3
         SigningBehavior: always
         SigningProtocol: sigv4
+
+  # Certificate to Add CloudFront Domain Name Alias (necessary for alias in distribution)
+  WebsiteCertificate:
+  Type: AWS::CertificateManager::Certificate
+  Properties:
+    DomainName: !Ref CertificateDomainName
+    SubjectAlternativeNames:
+      - "*.!Ref CloudFrontAlias"
+    ValidationMethod: DNS
 
   # CloudFront Distribution to Deploy S3 Website
   CloudFrontDistribution:
@@ -72,8 +86,8 @@ Resources:
             ResponseCode: 200
             ResponsePagePath: /index.html
         HttpVersion: http2
-        # Aliases:
-          # - charlescloudjourney.com
+        Aliases:
+          - CloudFrontAlias
         DefaultCacheBehavior:
           AllowedMethods:
             - GET
