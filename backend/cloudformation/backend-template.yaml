@@ -28,7 +28,7 @@ Parameters:
     Description: Allowed origin for HTTP API CORS configuration (https:// in front -> YES -> https://url.com)
     Default: https://cloud-resume-challenge.charlescloudjourney.com
 
-  CloudfrontCertificateArn:
+  CloudFrontCertificateArn:
     Type: String
     Description: ACM certificate ARN to configure SSL for Domain name alias
     Default: arn:aws:acm:us-east-1:533267111936:certificate/3371396f-6b65-46eb-913a-d1d46e1979c0
@@ -61,15 +61,15 @@ Resources:
         SigningBehavior: always
         SigningProtocol: sigv4
 
-  # Certificate to Add CloudFront Domain Name Alias (necessary for alias in distribution)
-  WebsiteCertificate:
-    Type: AWS::CertificateManager::Certificate
-    Properties:
-      DomainName: !Ref CertificateDomainName
-      SubjectAlternativeNames:
-        - "*.!Ref CertificateDomainName"
-      ValidationMethod: DNS
-      Region: us-east-1
+  # # Certificate to Add CloudFront Domain Name Alias (necessary for alias in distribution)
+  # WebsiteCertificate:
+  #   Type: AWS::CertificateManager::Certificate
+  #   Properties:
+  #     DomainName: !Ref CertificateDomainName
+  #     SubjectAlternativeNames:
+  #       - "*.!Ref CertificateDomainName"
+  #     ValidationMethod: DNS
+  #     Region: us-east-1
 
   # CloudFront Distribution to Deploy S3 Website
   CloudFrontDistribution:
