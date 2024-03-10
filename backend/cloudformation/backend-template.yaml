@@ -110,9 +110,9 @@ Resources:
         #     - CertificateIsValid
         #     - !Ref AWS::NoValue
         #     - "sni-only"
-          AcmCertificateArn: "arn:aws:acm:us-east-1:Id-of-IAM-User:certificate/1xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
-          MinimumProtocolVersion: TLSv1.2_2021
-          SslSupportMethod: sni-only
+        #   AcmCertificateArn: "arn:aws:acm:us-east-1:Id-of-IAM-User:certificate/1xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
+        #   MinimumProtocolVersion: TLSv1.2_2021
+        #   SslSupportMethod: sni-only
         DefaultCacheBehavior:
           AllowedMethods:
             - GET
