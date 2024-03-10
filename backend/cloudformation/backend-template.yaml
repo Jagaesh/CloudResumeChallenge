@@ -23,7 +23,6 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref CloudResumeChallengeBucketName
-      AccessControl: Private
 
   # # Origin Access Control Configuration for CloudFront Distribution
   # CloudFrontOriginAccessControl:
