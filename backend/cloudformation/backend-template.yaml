@@ -22,7 +22,7 @@ Parameters:
     Description: Subdomain name alias for the CloudFront distribution (https:// in front -> NO -> url.com)
     Default: cloud-resume-challenge.charlescloudjourney.com
 
-  CloudResumeChallengeAllowedOrigin:
+  APIAllowedOrigin:
     Type: String
     Description: Allowed origin for HTTP API CORS configuration (https:// in front -> YES -> https://url.com)
     Default: https://cloud-resume-challenge.charlescloudjourney.com
@@ -36,6 +36,12 @@ Parameters:
     Type: String
     Description: Runtime for Lambda functions
     Default: python3.9
+
+Conditions:
+  CertificateIsValid:
+    !Equals
+      - !GetAtt WebsiteCertificate.Status
+      - "ISSUED"
 
 Resources:
   # S3 Bucket for Cloud Resume Challenge
@@ -56,12 +62,13 @@ Resources:
 
   # Certificate to Add CloudFront Domain Name Alias (necessary for alias in distribution)
   WebsiteCertificate:
-  Type: AWS::CertificateManager::Certificate
-  Properties:
-    DomainName: !Ref CertificateDomainName
-    SubjectAlternativeNames:
-      - "*.!Ref CloudFrontAlias"
-    ValidationMethod: DNS
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref CertificateDomainName
+      SubjectAlternativeNames:
+        - "*.!Ref CloudFrontAlias"
+      ValidationMethod: DNS
+      Region: us-east-1
 
   # CloudFront Distribution to Deploy S3 Website
   CloudFrontDistribution:
@@ -87,7 +94,10 @@ Resources:
             ResponsePagePath: /index.html
         HttpVersion: http2
         Aliases:
-          - CloudFrontAlias
+          !If
+            - CertificateIsValid
+            - - CloudFrontAlias
+            - !Ref "AWS::NoValue"  # Don't add alias if certificate is not valid
         DefaultCacheBehavior:
           AllowedMethods:
             - GET
@@ -274,7 +284,7 @@ Resources:
       ProtocolType: HTTP
       CorsConfiguration:
         AllowOrigins:
-          - !Ref CloudResumeChallengeAllowedOrigin
+          - !Ref APIAllowedOrigin
           - !Sub "https://${CloudFrontDistribution.DomainName}"
         AllowHeaders:
           - "origin"
