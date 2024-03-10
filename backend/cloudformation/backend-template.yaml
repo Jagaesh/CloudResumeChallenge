@@ -261,7 +261,7 @@ Resources:
       CorsConfiguration:
         AllowOrigins:
           - !Ref CloudResumeChallengeAllowedOrigin
-            !GetAtt CloudFrontDistribution.DomainName
+          - !GetAtt CloudFrontDistribution.DomainName
         AllowHeaders:
           - "origin"
           - "content-type"
