@@ -25,17 +25,17 @@ Resources:
       BucketName: !Ref CloudResumeChallengeBucketName
       AccessControl: Private
 
-  # Origin Access Control Configuration for CloudFront Distribution
-  CloudFrontOriginAccessControl:
-    Type: AWS::CloudFront::OriginAccessControl
-    Properties:
-      OriginAccessControlConfig:
-        Name: cloud-resume-challenge-origin-access-control
-        OriginAccessControlOriginType: s3
-        SigningBehavior: always
-        SigningProtocol: sigv4
+  # # Origin Access Control Configuration for CloudFront Distribution
+  # CloudFrontOriginAccessControl:
+  #   Type: AWS::CloudFront::OriginAccessControl
+  #   Properties:
+  #     OriginAccessControlConfig:
+  #       Name: cloud-resume-challenge-origin-access-control
+  #       OriginAccessControlOriginType: s3
+  #       SigningBehavior: always
+  #       SigningProtocol: sigv4
 
-  # CloudFront Distribution to Deploy S3 Website
+  # # CloudFront Distribution to Deploy S3 Website
   # CloudFrontDistribution:
   #   Type: AWS::CloudFront::Distribution
   #   DependsOn:
