@@ -28,10 +28,10 @@ Parameters:
     Description: Allowed origin for HTTP API CORS configuration (https:// in front -> YES -> https://url.com)
     Default: https://cloud-resume-challenge.charlescloudjourney.com
 
-  # ACMCertificateArn:
-  #   Type: String
-  #   Description: ACM certificate ARN to configure SSL for Domain name alias
-  #   Default: !Sub "arn:aws:acm:us-east-1:${AWS::AccountId}:certificate/1xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
+  CloudfrontCertificateArn:
+    Type: String
+    Description: ACM certificate ARN to configure SSL for Domain name alias
+    Default: arn:aws:acm:us-east-1:533267111936:certificate/3371396f-6b65-46eb-913a-d1d46e1979c0
 
   LambdaRuntime:
     Type: String
