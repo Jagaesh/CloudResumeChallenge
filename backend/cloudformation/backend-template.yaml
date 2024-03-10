@@ -1,6 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Automates the deployment of resources to host a Cloud Resume Challenge website on S3
 
+
 Parameters:
   AWSRegion:
     Type: String
@@ -37,11 +38,11 @@ Parameters:
     Description: Runtime for Lambda functions
     Default: python3.9
 
-Conditions:
-  CertificateIsValid:
-    !Equals
-      - !GetAtt WebsiteCertificate.Status
-      - "ISSUED"
+# Conditions:
+#   CertificateNotCreated:
+#     !Equals
+#       - !Ref CloudfrontCertificateArn
+#       - "NOT_ISSUED"
 
 Resources:
   # S3 Bucket for Cloud Resume Challenge
@@ -94,20 +95,20 @@ Resources:
             ResponsePagePath: /index.html
         HttpVersion: http2
         # Aliases: !If
-        #   - CertificateIsValid
+        #   - CertificateNotCreated
         #   - - CloudFrontAlias
         #   - !Ref AWS::NoValue  # Don't add alias if certificate is not valid
         # ViewerCertificate:
         #   AcmCertificateArn: !If
-        #     - CertificateIsValid
+        #     - CertificateNotCreated
         #     - !Ref AWS::NoValue
         #     - !Ref CloudfrontCertificateArn
         #   CloudFrontDefaultCertificate: !If
-        #     - CertificateIsValid
+        #     - CertificateNotCreated
         #     - true
         #     - !Ref AWS::NoValue
         #   SslSupportMethod: !If
-        #     - CertificateIsValid
+        #     - CertificateNotCreated
         #     - !Ref AWS::NoValue
         #     - "sni-only"
         #   AcmCertificateArn: "arn:aws:acm:us-east-1:Id-of-IAM-User:certificate/1xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
