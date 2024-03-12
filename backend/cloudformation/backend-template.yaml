@@ -30,7 +30,7 @@ Parameters:
 
   CloudFrontCertificateArn:
     Type: String
-    Description: ACM certificate ARN to configure SSL for Domain name alias
+    Description: ACM certificate ARN to configure SSL for Domain name alias (please give a valid certificate ARN or an empty field if no certificate is issued).
     Default: arn:aws:acm:us-east-1:533267111936:certificate/3371396f-6b65-46eb-913a-d1d46e1979c0
 
   LambdaRuntime:
@@ -38,11 +38,11 @@ Parameters:
     Description: Runtime for Lambda functions
     Default: python3.9
 
-# Conditions:
-#   CertificateNotCreated:
-#     !Equals
-#       - !Ref CloudfrontCertificateArn
-#       - "NOT_ISSUED"
+Conditions:
+  CertificateNotValid:
+    !Equals
+      - !Ref CloudFrontCertificateArn
+      - ""
 
 Resources:
   # S3 Bucket for Cloud Resume Challenge
@@ -94,26 +94,24 @@ Resources:
             ResponseCode: 200
             ResponsePagePath: /index.html
         HttpVersion: http2
-        # Aliases: !If
-        #   - CertificateNotCreated
-        #   - - CloudFrontAlias
-        #   - !Ref AWS::NoValue  # Don't add alias if certificate is not valid
-        # ViewerCertificate:
-        #   AcmCertificateArn: !If
-        #     - CertificateNotCreated
-        #     - !Ref AWS::NoValue
-        #     - !Ref CloudfrontCertificateArn
-        #   CloudFrontDefaultCertificate: !If
-        #     - CertificateNotCreated
-        #     - true
-        #     - !Ref AWS::NoValue
-        #   SslSupportMethod: !If
-        #     - CertificateNotCreated
-        #     - !Ref AWS::NoValue
-        #     - "sni-only"
-        #   AcmCertificateArn: "arn:aws:acm:us-east-1:Id-of-IAM-User:certificate/1xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
-        #   MinimumProtocolVersion: TLSv1.2_2021
-        #   SslSupportMethod: sni-only
+        Aliases: !If
+          - CertificateNotValid
+          - !Ref AWS::NoValue  # Don't add alias if certificate is not valid
+          - CloudFrontAlias # Add alias if certificate is valid
+        ViewerCertificate:
+          AcmCertificateArn: !If
+            - CertificateNotValid
+            - !Ref AWS::NoValue
+            - !Ref CloudFrontCertificateArn
+          CloudFrontDefaultCertificate: !If
+            - CertificateNotValid
+            - true
+            - !Ref AWS::NoValue
+          SslSupportMethod: !If
+            - CertificateNotValid
+            - !Ref AWS::NoValue
+            - "sni-only"
+          MinimumProtocolVersion: TLSv1.2_2021
         DefaultCacheBehavior:
           AllowedMethods:
             - GET
@@ -121,7 +119,7 @@ Resources:
           Compress: true
           TargetOriginId: cloud-resume-challenge-cloudfront-distribution
           ForwardedValues:
-            QueryString: "false"
+            QueryString: "true"
             Cookies:
               Forward: none
           ViewerProtocolPolicy: redirect-to-https
