@@ -97,7 +97,7 @@ Resources:
         Aliases: !If
           - CertificateNotValid
           - !Ref AWS::NoValue  # Don't add alias if certificate is not valid
-          - CloudFrontAlias # Add alias if certificate is valid
+          - - CloudFrontAlias # Add alias if certificate is valid
         ViewerCertificate:
           AcmCertificateArn: !If
             - CertificateNotValid
