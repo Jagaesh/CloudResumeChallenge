@@ -94,10 +94,11 @@ Resources:
             ResponseCode: 200
             ResponsePagePath: /index.html
         HttpVersion: http2
-        Aliases: !If
-          - CertificateNotValid
-          - !Ref AWS::NoValue  # Don't add alias if certificate is not valid
-          - - CloudFrontAlias # Add alias if certificate is valid
+        Aliases: 
+          - !If
+            - CertificateNotValid
+            - !Ref AWS::NoValue  # Don't add alias if certificate is not valid
+            - !Ref CloudFrontAlias # Add alias if certificate is valid
         ViewerCertificate:
           AcmCertificateArn: !If
             - CertificateNotValid
