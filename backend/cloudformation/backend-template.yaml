@@ -13,10 +13,10 @@ Parameters:
     Description: Name for the S3 bucket to host the website
     Default: mrbrown-cloud-resume-challenge
 
-  CertificateDomainName:
-    Type: String
-    Description: Domain name for your blog/resume website (https:// in front -> NO -> url.com)
-    Default: charlescloudjourney.com
+  # CertificateDomainName:
+  #   Type: String
+  #   Description: Domain name for your blog/resume website (https:// in front -> NO -> url.com)
+  #   Default: charlescloudjourney.com
 
   CloudFrontAlias:
     Type: String
@@ -30,7 +30,7 @@ Parameters:
 
   CloudFrontCertificateArn:
     Type: String
-    Description: ACM certificate ARN to configure SSL for Domain name alias (please give a valid certificate ARN or an empty field if no certificate is issued).
+    Description: ACM certificate ARN to configure SSL for Domain name alias (please give a valid certificate ARN, or an empty field if no certificate is issued).
     Default: arn:aws:acm:us-east-1:533267111936:certificate/3371396f-6b65-46eb-913a-d1d46e1979c0
 
   LambdaRuntime:
