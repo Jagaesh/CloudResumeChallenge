@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Automates the creation of an IAM role for CloudFormation stack deployment (bootstrap)
+
+Resources:
+  # IAM Role for the CloudFormation Stack
+  CloudResumeChallenge-CloudFormationRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: cloudformation.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: CloudFormationExecutionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:ListBucket
+                  - cloudfront:CreateInvalidation
+                  - cloudfront:GetDistribution
+                  - cloudfront:GetInvalidation
+                  - cloudfront:ListDistributions
+                  - cloudfront:ListTagsForResource
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - apigateway:*
+                Resource: "*"
