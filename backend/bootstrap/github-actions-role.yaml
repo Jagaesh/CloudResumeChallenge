@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Automates the creation of an IAM role for GitHub Actions to launch CloudFormation templates (bootstrap)
+
+Resources:
+  # IAM Role for GitHub Actions
+  CloudResumeChallengeGitHubActionsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: CloudResumeChallenge-GitHubActionsRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: GitHubActionsCloudFormationPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - cloudformation:CreateChangeSet
+                  - cloudformation:DescribeChangeSet
+                  - cloudformation:ExecuteChangeSet
+                  - cloudformation:DeleteChangeSet
+                  - cloudformation:DescribeStacks
+                  - cloudformation:CreateStack
+                  - cloudformation:UpdateStack
+                  - cloudformation:DeleteStack
+                Resource: '*'
+              - Effect: Allow
+                Action: iam:PassRole
+                Resource: '*'

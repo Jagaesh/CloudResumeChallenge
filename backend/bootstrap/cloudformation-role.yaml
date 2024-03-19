@@ -1,11 +1,12 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Automates the creation of an IAM role for CloudFormation stack deployment (bootstrap)
+Description: Automates the creation of an IAM role for CloudFormation to deploy Cloud Resume Challenge stack (bootstrap)
 
 Resources:
   # IAM Role for the CloudFormation Stack
-  CloudResumeChallenge-CloudFormationRole:
+  CloudResumeChallengeCloudFormationRole:
     Type: AWS::IAM::Role
     Properties:
+      RoleName: CloudResumeChallenge-CloudFormationRole
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
