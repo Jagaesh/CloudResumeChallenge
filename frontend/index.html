@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cloud Resume Challenge</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  </head>
+  <body>
+   <nav class="navbar fixed-top navbar-expand-lg navbar-dark page-navbar gradient">
+      <div class="container">
+        <a class="navbar-brand logo" href="#">Cloud Resume Challenge</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item item">
+                <a class="nav-link" href="#work-experience">VISIT NUMBER</a>
+              </li>
+              <li class="nav-item item">
+                  <a class="nav-link" href="#education">Back-end</a>
+              </li>
+              <li class="nav-item item">
+                <a class="nav-link" href="#skills">Skills</a>
+              </li>
+              <li class="nav-item item">
+                  <a class="nav-link" href="#hobbies">About</a>
+              </li>
+            </ul>
+          </div>
+          <a href="https://charlescloudjourney.com/" class="btn btn-danger download-template" role="button" aria-disabled="true" target="_blank">Blog</a>
+      </div>
+    </nav>
+    <main class="page cv-page">
+      <section class="cv-block block-intro border-bottom">
+        <div class="container">
+          <div class="avatar">
+            <img class="img-fluid rounded-circle" src="assets/img/avatar.jpg">
+          </div>
+          <p>Hello! I'm <strong>Charles</strong>. This website is powered by Amazon S3.
+            Discover my take on the Cloud Resume Challenge.</p>
+          <p>(For the detailed walkthrough, check out my blog)</p>
+          <a href="https://charlescloudjourney.com/" class="btn btn-outline-primary" target="_blank">Blog</a>
+        </div>
+      </section>
+      <section class="cv-block info">
+        <div class="container">
+          <div class="work-experience group" id="work-experience">
+            <h2 class="text-center">Your Visit Number</h2>
+            <div class="item">
+              <div>
+                <h3><br>You are the</h3>
+              </div>
+              <div>
+                <h1 class="organization" id="visitCountDisplay">API Loading...</h1>
+              </div>
+              <div>
+                <h3>visitor<br><br><br><br></h3>
+              </div>
+              <div>
+                <p class="text-muted">The visit counter above is hosted on the cloud.
+                  This is what we call an Application Programming Interface (API).
+                  <br><br>Although it looks modest, it was quite a journey to display it on your screen.
+                  In the following section, you will discover the four major chunks you need to create your own.
+                  <br><br>Welcome to the Cloud Resume Challenge!<br><br></p>
+              </div>
+            </div>
+          </div>
+          <div class="education group" id="education">
+            <h2 class="text-center">How to deploy this API</h2>
+            <div class="item">
+              <p class="text-muted intro-text">The number is stored in a NoSQL database.
+                  It is then retrieved by an API call to Amazon Web Services (AWS).</p>
+            </div>
+            <div class="item">
+              <div class="row">
+                <div class="col-md-6">
+                  <h3>Chunk 1: Building the Front-end</h3>
+                  <h4 class="organization">Static Website</h4>
+                </div>
+                <div class="col-md-6">
+                  <time class="period">~10 hours</time>
+                </div>
+              </div>
+              <p class="text-muted">At first, you will build the frontend of this webpage.
+                It means writing the resume in HTML, styling it with CSS and deploying it as a static website on Amazon S3.
+                Then, you will seek to ensure HTTPS security with Amazon CloudFront and point a custom DNS domain name to the CloudFront distribution.</p>
+            </div>
+            <div class="item">
+              <div class="row">
+                <div class="col-md-6">
+                  <h3>Chunk 2: Building the API</h3>
+                  <h4 class="organization">API</h4>
+                </div>
+                <div class="col-md-6">
+                  <time class="period">~15 hours</time>
+                </div>
+              </div>
+              <p class="text-muted">Now, the goal will be to develop a serverless API on AWS that updates a visit counter in a database.
+                Services used are DynamoDB for data storage, AWS API Gateway and Lambda functions.</p>
+            </div>
+            <div class="item">
+              <div class="row">
+                <div class="col-md-6">
+                  <h3>Chunk 3: Front-end / Back-end Integration</h3>
+                  <h4 class="organization">Testing</h4>
+                </div>
+                <div class="col-md-6">
+                  <time class="period">~15 hours</time>
+                </div>
+              </div>
+              <p class="text-muted">At this stage, connecting the resume website to the serverless API is essential.
+                It enables the display of the visit counter on the homepage.
+                Besides, automated tests ensure that the code remains valid.</p>
+            </div>
+            <div class="item">
+              <div class="row">
+                <div class="col-md-6">
+                  <h3>Chunk 4: Automation / CI</h3>
+                  <h4 class="organization">Pipelines</h4>
+                </div>
+                <div class="col-md-6">
+                  <time class="period">~20 hours</time>
+                </div>
+              </div>
+              <p class="text-muted">Finally, it is time to define cloud resources using CloudFormation templates.
+                What's more, for both backend and frontend, GitHub Actions CI/CD pipelines automate the deployment after each update to the code.</p>
+            </div>
+          </div>
+          <div class="group" id="skills">
+            <h2 class="text-center">Skills Used</h2>
+            <div class="row justify-content-center">
+              <div class="col-md-7">
+                <div class="skills info-card">
+                  <h2>AWS / CI</h2>
+                  <h3>CloudFormation</h3>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="100"
+                    aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                    </div>
+                  </div>
+                  <h3>GitHub Actions</h3>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="100"
+                    aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                    </div>
+                  </div>
+                  <h3>API Gateway</h3>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="90"
+                    aria-valuemin="0" aria-valuemax="100" style="width:90%">
+                    </div>
+                  </div>
+                  <h3>CloudFront</h3>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="80"
+                    aria-valuemin="0" aria-valuemax="100" style="width:90%">
+                    </div>
+                  </div>
+                  <h3>Lambda</h3>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="80"
+                    aria-valuemin="0" aria-valuemax="100" style="width:80%">
+                    </div>
+                  </div>
+                  <h3>HTML & CSS</h3>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                    aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                    </div>
+                  </div>
+                  <h3>Route 53</h3>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                    aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                    </div>
+                  </div>
+                  <h3>Certificate Manager</h3>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                    aria-valuemin="0" aria-valuemax="100" style="width:70%">
+                    </div>
+                  </div>
+                  <h3>Cypress</h3>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60"
+                    aria-valuemin="0" aria-valuemax="100" style="width:60%">
+                    </div>
+                  </div>
+                  <h3>S3 (Simple Storage Service)</h3>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60"
+                    aria-valuemin="0" aria-valuemax="100" style="width:60%">
+                    </div>
+                  </div>
+                  <h3>DynamoDB</h3>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60"
+                    aria-valuemin="0" aria-valuemax="100" style="width:60%">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hobbies group" id="hobbies">
+            <h2 class="text-center">About</h2>
+            <p class="text-center text-muted">The Cloud Resume Challenge is an opportunity to demonstrate cloud computing skills.
+              It was introduced by Forrest Brazeal on Twitter and LinkedIn in 2020.<br>
+              In 16 steps, participants deploy a website on cloud platforms like AWS.
+              It is the best way to gain hands-on experience with cloud services.</p>
+            <p class="text-center text-muted">Ready to rise up to the task?</p>
+            <a href="https://cloudresumechallenge.dev/" class="btn btn-outline-primary" target="_blank">Official Website</a>
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <div class="contact-info info-card">
+                  <h2>Contact Info</h2>
+                  <div class="row">
+                    <div class="col-1">
+                      <i class="ion-android-calendar icon"></i>
+                    </div>
+                    <div class="col-9">
+                      <span>10/02/1999</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-1">
+                        <i class="ion-person icon"></i>
+                    </div>
+                    <div class="col-9">
+                      <span>Charles Mallet</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-1">
+                      <i class="ion-ios-telephone icon"></i>
+                    </div>
+                    <div class="col-9">
+                      <span>+33 6 79 58 53 37</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-1">
+                      <i class="ion-at icon"></i>
+                    </div>
+                    <div class="col-9">
+                      <span>charles.techjourney@gmail.com</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="page-footer">
+        <div class="container">
+          <div class="social-icons">
+            <a href="https://www.linkedin.com/in/charles-mallet/" target="_blank"><i class="ion-social-linkedin" title="LinkedIn"></i></a>
+            <a href="https://github.com/Jagaesh/CloudResumeChallenge" target="_blank"><i class="ion-social-github" title="GitHub"></i></a>
+            <a href="mailto:charles.techjourney@gmail.com" target="_blank"><i class="ion-email" title="Mail"></i></a>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="assets/js/script.js"></script>
+  <script>
+    // Function to make API call and update VisitCount value
+    function fetchVisitCount() {
+      // Check if the function has been called before
+      const localVisitCount = localStorage.getItem('visitCount');
+
+      if (localVisitCount === null) {
+        const apiEndpoint = 'https://eu9rq493c1.execute-api.ap-northeast-2.amazonaws.com/visitcount';
+
+        // Make the API call using Fetch API
+        fetch(apiEndpoint)
+          .then(response => response.json())
+          .then(data => {
+            // Extract VisitCount value from the API response
+            console.log('API Response:', data);
+            const serverVisitCount = data.UpdatedAttributes.VisitCount;
+
+            // Set VisitCount in localStorage
+            localStorage.setItem('visitCount', serverVisitCount);
+
+            // Update the display content
+            document.getElementById('visitCountDisplay').innerText = `${serverVisitCount}th`;
+          })
+          .catch(error => {
+            console.error('Error fetching VisitCount:', error);
+          });
+      } else {
+        // Visit count already present in localStorage, update the display
+        document.getElementById('visitCountDisplay').innerText = `${localVisitCount}th`;
+      }
+    }
+
+    // Call the fetchVisitCount function when the page loads
+    window.onload = function () {
+      // Fetch visit count after a short delay (simulating loading time)
+      setTimeout(fetchVisitCount, 1000);
+    };
+  </script>
+</html>
+

@@ -8,4 +8,4 @@ Welcome to my Cloud Resume Challenge project! Here's a brief overview:
 
 You can view the website at [cloud-resume-challenge.charlescloudjourney.com](https://cloud-resume-challenge.charlescloudjourney.com/).
 
-Feel free to explore and reach out with any questions or feedback!
+Feel free to reach out with any question!
