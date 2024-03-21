@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script>
+      // Define apiEndpoint URL at the top of the document
+      const apiEndpoint = 'https://eu9rq493c1.execute-api.ap-northeast-2.amazonaws.com/visitcount';
+    </script>
   </head>
   <body>
    <nav class="navbar fixed-top navbar-expand-lg navbar-dark page-navbar gradient">
@@ -277,8 +281,6 @@
       const localVisitCount = localStorage.getItem('visitCount');
 
       if (localVisitCount === null) {
-        const apiEndpoint = 'https://eu9rq493c1.execute-api.ap-northeast-2.amazonaws.com/visitcount';
-
         // Make the API call using Fetch API
         fetch(apiEndpoint)
           .then(response => response.json())
